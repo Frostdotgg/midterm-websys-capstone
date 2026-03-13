@@ -1,0 +1,893 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="CampuSphere — Role-Based Dashboard for CSPC campus management and navigation.">
+  <title>CampuSphere | Dashboard</title>
+  <link rel="stylesheet" href="styles.css?v=2">
+  <link rel="stylesheet" href="home.css?v=2">
+  <link rel="stylesheet" href="dashboard.css?v=2">
+  <link rel="icon" type="image/png" href="cspc-logo.png">
+</head>
+
+<body>
+
+  <!-- ===== DASHBOARD NAVBAR ===== -->
+  <nav class="dash-nav" id="dashNav">
+    <div class="dash-nav__inner">
+      <a href="home.html" class="dash-nav__brand">
+        <img src="cspc-logo.png" alt="CSPC Logo" class="dash-nav__logo">
+        <span class="dash-nav__title">CampusSphere</span>
+      </a>
+      <div class="dash-nav__tabs" id="dashTabs">
+        <a href="home.html" class="dash-nav__tab">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z" />
+          </svg>
+          <span>Home</span>
+        </a>
+        <a href="dashboard.html" class="dash-nav__tab dash-nav__tab--active">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <rect x="3" y="3" width="7" height="7" />
+            <rect x="14" y="3" width="7" height="7" />
+            <rect x="14" y="14" width="7" height="7" />
+            <rect x="3" y="14" width="7" height="7" />
+          </svg>
+          <span>Dashboard</span>
+        </a>
+        <a href="buildings.html" class="dash-nav__tab">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+            stroke-linecap="round" stroke-linejoin="round">
+            <rect x="4" y="2" width="16" height="20" rx="2" ry="2" />
+            <path d="M9 22v-4h6v4" />
+            <path d="M8 6h.01" />
+            <path d="M16 6h.01" />
+          </svg>
+          <span>Buildings</span>
+        </a>
+        <a href="events.html" class="dash-nav__tab">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+            stroke-linecap="round" stroke-linejoin="round">
+            <rect x="3" y="4" width="18" height="18" rx="2" />
+            <line x1="16" y1="2" x2="16" y2="6" />
+            <line x1="8" y1="2" x2="8" y2="6" />
+            <line x1="3" y1="10" x2="21" y2="10" />
+          </svg>
+          <span>Events</span>
+        </a>
+        <a href="map.html" class="dash-nav__tab">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+            stroke-linecap="round" stroke-linejoin="round">
+            <polygon points="1 6 1 22 8 18 16 22 23 18 23 2 16 6 8 2 1 6" />
+            <line x1="8" y1="2" x2="8" y2="18" />
+            <line x1="16" y1="6" x2="16" y2="22" />
+          </svg>
+          <span>Campus Map</span>
+          <a href="about.html" class="dash-nav__tab">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+              stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="10" />
+              <line x1="12" y1="16" x2="12" y2="12" />
+              <line x1="12" y1="8" x2="12.01" y2="8" />
+            </svg>
+            <span>About Us</span>
+          </a>
+      </div>
+      <div class="dash-nav__right">
+        <button class="dash-nav__icon-btn" aria-label="Notifications">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+            stroke-linecap="round" stroke-linejoin="round">
+            <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9" />
+            <path d="M13.73 21a2 2 0 0 1-3.46 0" />
+          </svg>
+          <span class="dash-nav__notif-dot"></span>
+        </button>
+        <div class="dash-nav__user">
+          <div class="dash-nav__avatar">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+              stroke-linecap="round" stroke-linejoin="round">
+              <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+              <circle cx="12" cy="7" r="4" />
+            </svg>
+          </div>
+          <span class="dash-nav__username" id="navUsername">Aaron</span>
+          <svg class="dash-nav__chevron" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+            stroke-width="2.5">
+            <polyline points="6 9 12 15 18 9" />
+          </svg>
+        </div>
+      </div>
+      <button class="dash-nav__hamburger" id="dashHamburger" aria-label="Toggle menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- Main Dashboard Layout -->
+  <div class="dashboard" id="dashboardLayout">
+
+    <!-- ===== SIDEBAR ===== -->
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar__header">
+        <div class="sidebar__role-title" id="roleTitle">Student (CSPC Email)</div>
+        <span class="sidebar__role-badge" id="roleBadge">CSPC Verified</span>
+      </div>
+
+      <nav class="sidebar__nav" id="sidebarNav">
+        <!-- Dynamically rendered by JS -->
+      </nav>
+
+      <div class="sidebar__footer">
+        <div class="sidebar__user">
+          <div class="sidebar__avatar">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+              <circle cx="12" cy="7" r="4" />
+            </svg>
+          </div>
+          <div class="sidebar__user-info">
+            <div class="sidebar__user-name" id="sidebarName">Aaron V. Lasprillas</div>
+            <div class="sidebar__user-email" id="sidebarEmail">aaron@cspc.edu.ph</div>
+          </div>
+        </div>
+      </div>
+    </aside>
+
+    <!-- ===== MAIN CONTENT PANEL ===== -->
+    <main class="dash-panel" id="dashPanel">
+      <div class="dash-panel__header">
+        <h1 class="dash-panel__greeting" id="panelGreeting">Welcome, Aaron!</h1>
+        <p class="dash-panel__role-label" id="panelRoleLabel">Student (CSPC) — CSPC Verified</p>
+      </div>
+
+      <!-- ===== CONTENT CONTAINER ===== -->
+      <div id="contentContainer">
+        <!-- All sections rendered here by EJS-style templating engine -->
+      </div>
+    </main>
+  </div>
+
+  <!-- Mobile Sidebar Toggle -->
+  <button class="sidebar-toggle" id="sidebarToggle" aria-label="Toggle sidebar">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+      stroke-linecap="round" stroke-linejoin="round">
+      <line x1="3" y1="12" x2="21" y2="12" />
+      <line x1="3" y1="6" x2="21" y2="6" />
+      <line x1="3" y1="18" x2="21" y2="18" />
+    </svg>
+  </button>
+
+  <!-- Theme Toggle -->
+  <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode">
+    <svg class="icon-sun" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+      stroke-linecap="round" stroke-linejoin="round">
+      <circle cx="12" cy="12" r="5" />
+      <line x1="12" y1="1" x2="12" y2="3" />
+      <line x1="12" y1="21" x2="12" y2="23" />
+      <line x1="4.22" y1="4.22" x2="5.64" y2="5.64" />
+      <line x1="18.36" y1="18.36" x2="19.78" y2="19.78" />
+      <line x1="1" y1="12" x2="3" y2="12" />
+      <line x1="21" y1="12" x2="23" y2="12" />
+      <line x1="4.22" y1="19.78" x2="5.64" y2="18.36" />
+      <line x1="18.36" y1="5.64" x2="19.78" y2="4.22" />
+    </svg>
+    <svg class="icon-moon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+      stroke-linecap="round" stroke-linejoin="round">
+      <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
+    </svg>
+  </button>
+
+  <!-- =========================================================
+       EJS-STYLE TEMPLATES (rendered by client-side JS engine)
+       ========================================================= -->
+
+  <!-- OVERVIEW: Student CSPC -->
+  <script type="text/ejs-template" id="tmpl-student-cspc-overview">
+    <div class="stat-cards">
+      <div class="stat-card">
+        <div class="stat-card__icon stat-card__icon--blue">📚</div>
+        <div class="stat-card__label">Course</div>
+        <div class="stat-card__value stat-card__value--sm"><%= studentProfile.course %></div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-card__icon stat-card__icon--green">📅</div>
+        <div class="stat-card__label">Year & Section</div>
+        <div class="stat-card__value stat-card__value--sm"><%= studentProfile.yearLevel %> — <%= studentProfile.section %></div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-card__icon stat-card__icon--gold">🏫</div>
+        <div class="stat-card__label">Assigned Room</div>
+        <div class="stat-card__value stat-card__value--sm"><%= studentProfile.assignedRoom %></div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-card__icon stat-card__icon--red">📊</div>
+        <div class="stat-card__label">GWA</div>
+        <div class="stat-card__value"><%= studentProfile.gwa %></div>
+      </div>
+    </div>
+    <div class="info-grid">
+      <div class="panel-card">
+        <div class="panel-card__header"><h3 class="panel-card__title">Enrollment Status</h3><span class="status-badge status-badge--enrolled"><%= studentProfile.enrollmentStatus %></span></div>
+        <div class="panel-card__body">
+          <p style="font-size:0.88rem;color:var(--gray-600);"><strong><%= studentProfile.semester %></strong><br>Status: <span style="color:var(--green-accent);font-weight:600;"><%= studentProfile.status %></span></p>
+        </div>
+      </div>
+      <div class="panel-card">
+        <div class="panel-card__header"><h3 class="panel-card__title">Quick Links</h3></div>
+        <div class="panel-card__body">
+          <div style="display:flex;flex-direction:column;gap:8px;">
+            <a href="map.html" class="btn btn--primary btn--sm" style="justify-content:flex-start;">🗺️ Open Campus Map</a>
+            <a href="buildings.html" class="btn btn--outline btn--sm" style="justify-content:flex-start;text-transform:none;">🏢 View Buildings</a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="panel-card">
+      <div class="panel-card__header"><h3 class="panel-card__title">Latest News</h3></div>
+      <div class="panel-card__body">
+        <% for(var i=0; i<news.length && i<2; i++) { %>
+          <div class="news-item">
+            <span class="news-item__category"><%= news[i].category %></span>
+            <div class="news-item__title"><%= news[i].title %></div>
+            <div class="news-item__date"><%= news[i].date %></div>
+            <p class="news-item__excerpt"><%= news[i].excerpt %></p>
+          </div>
+        <% } %>
+      </div>
+    </div>
+  </script>
+
+  <!-- PROFILE: Student CSPC -->
+  <script type="text/ejs-template" id="tmpl-student-cspc-profile">
+    <div class="panel-card">
+      <div class="panel-card__header"><h3 class="panel-card__title">Personal Information</h3></div>
+      <div class="panel-card__body">
+        <div class="profile-info">
+          <div class="profile-info__item"><span class="profile-info__label">Full Name</span><span class="profile-info__value"><%= studentProfile.name %></span></div>
+          <div class="profile-info__item"><span class="profile-info__label">Student ID</span><span class="profile-info__value"><%= studentProfile.studentId %></span></div>
+          <div class="profile-info__item"><span class="profile-info__label">Email</span><span class="profile-info__value"><%= studentProfile.email %></span></div>
+          <div class="profile-info__item"><span class="profile-info__label">Course</span><span class="profile-info__value"><%= studentProfile.course %></span></div>
+          <div class="profile-info__item"><span class="profile-info__label">Year Level</span><span class="profile-info__value"><%= studentProfile.yearLevel %></span></div>
+          <div class="profile-info__item"><span class="profile-info__label">Section</span><span class="profile-info__value"><%= studentProfile.section %></span></div>
+          <div class="profile-info__item"><span class="profile-info__label">Status</span><span class="profile-info__value"><span class="status-badge status-badge--active"><%= studentProfile.status %></span></span></div>
+          <div class="profile-info__item"><span class="profile-info__label">Semester</span><span class="profile-info__value"><%= studentProfile.semester %></span></div>
+        </div>
+      </div>
+    </div>
+  </script>
+
+  <!-- ENROLLMENT: Student CSPC -->
+  <script type="text/ejs-template" id="tmpl-student-cspc-enrollment">
+    <div class="stat-cards">
+      <div class="stat-card"><div class="stat-card__icon stat-card__icon--blue">📄</div><div class="stat-card__label">Enrollment Status</div><div class="stat-card__value stat-card__value--sm"><%= studentProfile.enrollmentStatus %></div></div>
+      <div class="stat-card"><div class="stat-card__icon stat-card__icon--green">📅</div><div class="stat-card__label">Semester</div><div class="stat-card__value stat-card__value--sm"><%= studentProfile.semester %></div></div>
+      <div class="stat-card"><div class="stat-card__icon stat-card__icon--gold">⭐</div><div class="stat-card__label">GWA</div><div class="stat-card__value"><%= studentProfile.gwa %></div></div>
+    </div>
+    <div class="panel-card">
+      <div class="panel-card__header"><h3 class="panel-card__title">Enrolled Subjects</h3></div>
+      <div class="panel-card__body">
+        <table class="data-table"><thead><tr><th>Subject</th><th>Room</th><th>Schedule</th><th>Instructor</th></tr></thead><tbody>
+        <% for(var i=0; i<schedule.length; i++) { %>
+          <tr><td><%= schedule[i].subject %></td><td><%= schedule[i].room %></td><td><%= schedule[i].day %> <%= schedule[i].time %></td><td><%= schedule[i].instructor %></td></tr>
+        <% } %>
+        </tbody></table>
+      </div>
+    </div>
+  </script>
+
+  <!-- SCHEDULE: Student CSPC -->
+  <script type="text/ejs-template" id="tmpl-student-cspc-schedule">
+    <div class="panel-card">
+      <div class="panel-card__header"><h3 class="panel-card__title">Class Schedule — <%= studentProfile.semester %></h3></div>
+      <div class="panel-card__body">
+        <table class="data-table"><thead><tr><th>Time</th><th>Subject</th><th>Room</th><th>Day</th><th>Instructor</th></tr></thead><tbody>
+        <% for(var i=0; i<schedule.length; i++) { %>
+          <tr><td><%= schedule[i].time %></td><td><strong><%= schedule[i].subject %></strong></td><td><%= schedule[i].room %></td><td><%= schedule[i].day %></td><td><%= schedule[i].instructor %></td></tr>
+        <% } %>
+        </tbody></table>
+      </div>
+    </div>
+  </script>
+
+  <!-- NEWS (shared) -->
+  <script type="text/ejs-template" id="tmpl-shared-news">
+    <div class="panel-card">
+      <div class="panel-card__header"><h3 class="panel-card__title">News & Announcements</h3></div>
+      <div class="panel-card__body">
+        <% for(var i=0; i<news.length; i++) { %>
+          <div class="news-item">
+            <span class="news-item__category"><%= news[i].category %></span>
+            <div class="news-item__title"><%= news[i].title %></div>
+            <div class="news-item__date"><%= news[i].date %></div>
+            <p class="news-item__excerpt"><%= news[i].excerpt %></p>
+          </div>
+        <% } %>
+      </div>
+    </div>
+  </script>
+
+  <!-- MAP (shared) -->
+  <script type="text/ejs-template" id="tmpl-shared-map">
+    <div class="panel-card">
+      <div class="panel-card__header"><h3 class="panel-card__title">Campus Map — CSPC Nabua</h3><a href="map.html" class="btn btn--primary btn--sm">Open Full Map</a></div>
+      <div class="panel-card__body">
+        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3887.5!2d123.37362!3d13.40591!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x33a1917e76579b27%3A0x2e6b0c7b1e2df2a7!2sCamarines%20Sur%20Polytechnic%20Colleges!5e0!3m2!1sen!2sph" width="100%" height="350" style="border:0;border-radius:12px;" allowfullscreen="" loading="lazy" title="CSPC Campus Map"></iframe>
+      </div>
+    </div>
+  </script>
+
+  <!-- OVERVIEW: Student Non-CSPC -->
+  <script type="text/ejs-template" id="tmpl-student-non-cspc-overview">
+    <div class="stat-cards">
+      <div class="stat-card"><div class="stat-card__icon stat-card__icon--blue">🏛️</div><div class="stat-card__label">Campus Offices</div><div class="stat-card__value stat-card__value--sm"><%= campusOffices.length %></div></div>
+      <div class="stat-card"><div class="stat-card__icon stat-card__icon--green">📋</div><div class="stat-card__label">Admission</div><div class="stat-card__value stat-card__value--sm">Open</div></div>
+      <div class="stat-card"><div class="stat-card__icon stat-card__icon--gold">🗺️</div><div class="stat-card__label">Campus Map</div><div class="stat-card__value stat-card__value--sm">Available</div></div>
+    </div>
+    <div class="panel-card" style="margin-bottom:var(--space-xl);">
+      <div class="panel-card__header"><h3 class="panel-card__title">Welcome, Future Cavalier!</h3></div>
+      <div class="panel-card__body"><p style="color:var(--gray-600);font-size:0.9rem;line-height:1.7;">Welcome to CampusSphere! As a prospective student, you can explore important campus offices, learn about the admission process, and navigate the campus map. For full features, enroll and sign in with your <strong>@cspc.edu.ph</strong> email.</p></div>
+    </div>
+  </script>
+
+  <!-- OFFICES: Student Non-CSPC -->
+  <script type="text/ejs-template" id="tmpl-student-non-cspc-offices">
+    <div class="panel-card">
+      <div class="panel-card__header"><h3 class="panel-card__title">Important Campus Offices & Entry Points</h3></div>
+      <div class="panel-card__body">
+        <% for(var i=0; i<campusOffices.length; i++) { %>
+          <div class="news-item">
+            <div class="news-item__title"><%= campusOffices[i].name %></div>
+            <div class="news-item__date">📍 <%= campusOffices[i].location %></div>
+            <p class="news-item__excerpt"><%= campusOffices[i].description %></p>
+            <% if(campusOffices[i].hours) { %><p style="font-size:0.8rem;color:var(--green-accent);font-weight:600;margin-top:4px;">🕐 <%= campusOffices[i].hours %></p><% } %>
+          </div>
+        <% } %>
+      </div>
+    </div>
+  </script>
+
+  <!-- ADMISSION: Student Non-CSPC -->
+  <script type="text/ejs-template" id="tmpl-student-non-cspc-admission">
+    <div class="info-grid">
+      <div class="panel-card">
+        <div class="panel-card__header"><h3 class="panel-card__title">Admission Requirements</h3></div>
+        <div class="panel-card__body">
+          <div style="display:flex;flex-direction:column;gap:8px;">
+            <% for(var i=0; i<admissionInfo.requirements.length; i++) { %>
+              <div style="display:flex;align-items:center;gap:8px;font-size:0.88rem;color:var(--gray-700);">
+                <span style="color:var(--navy-600);font-weight:700;">✓</span> <%= admissionInfo.requirements[i] %>
+              </div>
+            <% } %>
+          </div>
+        </div>
+      </div>
+      <div class="panel-card">
+        <div class="panel-card__header"><h3 class="panel-card__title">How to Apply</h3></div>
+        <div class="panel-card__body">
+          <div style="display:flex;flex-direction:column;gap:10px;">
+            <% for(var i=0; i<admissionInfo.steps.length; i++) { %>
+              <p style="font-size:0.88rem;color:var(--gray-700);margin:0;"><%= admissionInfo.steps[i] %></p>
+            <% } %>
+          </div>
+          <div style="margin-top:var(--space-lg);padding:var(--space-md);background:rgba(30,77,140,0.06);border-radius:var(--radius-md);">
+            <p style="font-size:0.85rem;color:var(--navy-700);font-weight:600;margin:0 0 4px;">📅 Deadline: <%= admissionInfo.deadline %></p>
+            <p style="font-size:0.82rem;color:var(--gray-600);margin:0;">📧 Contact: <%= admissionInfo.contactEmail %></p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </script>
+
+  <!-- OVERVIEW: Instructor -->
+  <script type="text/ejs-template" id="tmpl-instructor-overview">
+    <div class="stat-cards">
+      <div class="stat-card"><div class="stat-card__icon stat-card__icon--blue">👨‍🏫</div><div class="stat-card__label">Position</div><div class="stat-card__value stat-card__value--sm"><%= instructorProfile.position %></div></div>
+      <div class="stat-card"><div class="stat-card__icon stat-card__icon--green">🏢</div><div class="stat-card__label">Department</div><div class="stat-card__value stat-card__value--sm"><%= instructorProfile.department %></div></div>
+      <div class="stat-card"><div class="stat-card__icon stat-card__icon--gold">🚪</div><div class="stat-card__label">Assigned Rooms</div><div class="stat-card__value"><%= instructorProfile.assignedRooms.length %></div></div>
+      <div class="stat-card"><div class="stat-card__icon stat-card__icon--red">✅</div><div class="stat-card__label">Status</div><div class="stat-card__value stat-card__value--sm"><%= instructorProfile.status %></div></div>
+    </div>
+    <div class="panel-card">
+      <div class="panel-card__header"><h3 class="panel-card__title">Assigned Rooms & Schedule</h3></div>
+      <div class="panel-card__body">
+        <table class="data-table"><thead><tr><th>Room</th><th>Subject</th><th>Schedule</th></tr></thead><tbody>
+        <% for(var i=0; i<instructorProfile.assignedRooms.length; i++) { %>
+          <tr><td><%= instructorProfile.assignedRooms[i].room %></td><td><strong><%= instructorProfile.assignedRooms[i].subject %></strong></td><td><%= instructorProfile.assignedRooms[i].schedule %></td></tr>
+        <% } %>
+        </tbody></table>
+      </div>
+    </div>
+  </script>
+
+  <!-- PROFILE: Instructor -->
+  <script type="text/ejs-template" id="tmpl-instructor-profile">
+    <div class="panel-card">
+      <div class="panel-card__header"><h3 class="panel-card__title">Instructor Profile</h3></div>
+      <div class="panel-card__body">
+        <div class="profile-info">
+          <div class="profile-info__item"><span class="profile-info__label">Full Name</span><span class="profile-info__value"><%= instructorProfile.name %></span></div>
+          <div class="profile-info__item"><span class="profile-info__label">Employee ID</span><span class="profile-info__value"><%= instructorProfile.employeeId %></span></div>
+          <div class="profile-info__item"><span class="profile-info__label">Email</span><span class="profile-info__value"><%= instructorProfile.email %></span></div>
+          <div class="profile-info__item"><span class="profile-info__label">Department</span><span class="profile-info__value"><%= instructorProfile.department %></span></div>
+          <div class="profile-info__item"><span class="profile-info__label">Position</span><span class="profile-info__value"><%= instructorProfile.position %></span></div>
+          <div class="profile-info__item"><span class="profile-info__label">Status</span><span class="profile-info__value"><span class="status-badge status-badge--active"><%= instructorProfile.status %></span></span></div>
+        </div>
+      </div>
+    </div>
+  </script>
+
+  <!-- ANNOUNCEMENTS: Instructor -->
+  <script type="text/ejs-template" id="tmpl-instructor-announcements">
+    <div class="panel-card" style="margin-bottom:var(--space-xl);">
+      <div class="panel-card__header"><h3 class="panel-card__title">Manage Announcements</h3><button class="btn btn--primary btn--sm" onclick="alert('Create Announcement (simulated)')">+ New</button></div>
+      <div class="panel-card__body">
+        <% for(var i=0; i<news.length; i++) { %>
+          <div class="news-item">
+            <span class="news-item__category"><%= news[i].category %></span>
+            <div class="news-item__title"><%= news[i].title %></div>
+            <div class="news-item__date"><%= news[i].date %></div>
+            <p class="news-item__excerpt"><%= news[i].excerpt %></p>
+          </div>
+        <% } %>
+      </div>
+    </div>
+  </script>
+
+  <!-- ROOMS: Instructor -->
+  <script type="text/ejs-template" id="tmpl-instructor-rooms">
+    <div class="panel-card">
+      <div class="panel-card__header"><h3 class="panel-card__title">Assigned Rooms</h3></div>
+      <div class="panel-card__body">
+        <table class="data-table"><thead><tr><th>Room</th><th>Subject</th><th>Schedule</th></tr></thead><tbody>
+        <% for(var i=0; i<instructorProfile.assignedRooms.length; i++) { %>
+          <tr><td><%= instructorProfile.assignedRooms[i].room %></td><td><%= instructorProfile.assignedRooms[i].subject %></td><td><%= instructorProfile.assignedRooms[i].schedule %></td></tr>
+        <% } %>
+        </tbody></table>
+      </div>
+    </div>
+  </script>
+
+  <!-- STATUS: Instructor -->
+  <script type="text/ejs-template" id="tmpl-instructor-status">
+    <div class="panel-card">
+      <div class="panel-card__header"><h3 class="panel-card__title">My Status</h3></div>
+      <div class="panel-card__body">
+        <div class="profile-info">
+          <div class="profile-info__item"><span class="profile-info__label">Current Status</span><span class="profile-info__value"><span class="status-badge status-badge--active"><%= instructorProfile.status %></span></span></div>
+          <div class="profile-info__item"><span class="profile-info__label">Teaching Load</span><span class="profile-info__value"><%= instructorProfile.assignedRooms.length %> subjects</span></div>
+        </div>
+      </div>
+    </div>
+  </script>
+
+  <!-- SCHEDULE: Instructor -->
+  <script type="text/ejs-template" id="tmpl-instructor-schedule">
+    <div class="panel-card">
+      <div class="panel-card__header"><h3 class="panel-card__title">Teaching Schedule</h3></div>
+      <div class="panel-card__body">
+        <table class="data-table"><thead><tr><th>Room</th><th>Subject</th><th>Schedule</th></tr></thead><tbody>
+        <% for(var i=0; i<instructorProfile.assignedRooms.length; i++) { %>
+          <tr><td><%= instructorProfile.assignedRooms[i].room %></td><td><strong><%= instructorProfile.assignedRooms[i].subject %></strong></td><td><%= instructorProfile.assignedRooms[i].schedule %></td></tr>
+        <% } %>
+        </tbody></table>
+      </div>
+    </div>
+  </script>
+
+  <!-- ALL ROOMS: Instructor -->
+  <script type="text/ejs-template" id="tmpl-instructor-all-rooms">
+    <div class="panel-card">
+      <div class="panel-card__header"><h3 class="panel-card__title">All Campus Rooms</h3></div>
+      <div class="panel-card__body">
+        <table class="data-table"><thead><tr><th>Building</th><th>Room</th><th>Type</th><th>Capacity</th></tr></thead><tbody>
+        <% for(var i=0; i<allRooms.length; i++) { %>
+          <tr><td><%= allRooms[i].building %></td><td><strong><%= allRooms[i].room %></strong></td><td><%= allRooms[i].type %></td><td><%= allRooms[i].capacity %></td></tr>
+        <% } %>
+        </tbody></table>
+      </div>
+    </div>
+  </script>
+
+  <!-- OVERVIEW: Admin -->
+  <script type="text/ejs-template" id="tmpl-admin-overview">
+    <div class="stat-cards">
+      <div class="stat-card"><div class="stat-card__icon stat-card__icon--blue">👥</div><div class="stat-card__label">Total Users</div><div class="stat-card__value"><%= adminUsers.length %></div></div>
+      <div class="stat-card"><div class="stat-card__icon stat-card__icon--green">📰</div><div class="stat-card__label">Published News</div><div class="stat-card__value"><%= news.length %></div></div>
+      <div class="stat-card"><div class="stat-card__icon stat-card__icon--gold">🗺️</div><div class="stat-card__label">Map Locations</div><div class="stat-card__value">20+</div></div>
+      <div class="stat-card"><div class="stat-card__icon stat-card__icon--red">📋</div><div class="stat-card__label">System Logs</div><div class="stat-card__value"><%= logs.length %></div></div>
+    </div>
+    <div class="info-grid">
+      <div class="panel-card">
+        <div class="panel-card__header"><h3 class="panel-card__title">Recent Users</h3><a href="#" class="btn btn--primary btn--sm" onclick="document.getElementById('roleSelector').value='admin'; switchSection('users'); return false;">View All</a></div>
+        <div class="panel-card__body">
+          <table class="data-table"><thead><tr><th>Name</th><th>Role</th><th>Status</th></tr></thead><tbody>
+          <% for(var i=0; i<adminUsers.length && i<3; i++) { %>
+            <tr><td><%= adminUsers[i].name %></td><td><%= adminUsers[i].role %></td><td><span class="status-badge status-badge--active"><%= adminUsers[i].status %></span></td></tr>
+          <% } %>
+          </tbody></table>
+        </div>
+      </div>
+      <div class="panel-card">
+        <div class="panel-card__header"><h3 class="panel-card__title">Recent Logs</h3></div>
+        <div class="panel-card__body">
+          <table class="data-table"><thead><tr><th>Time</th><th>Action</th></tr></thead><tbody>
+          <% for(var i=0; i<logs.length && i<3; i++) { %>
+            <tr><td><%= logs[i].time %></td><td><%= logs[i].action %></td></tr>
+          <% } %>
+          </tbody></table>
+        </div>
+      </div>
+    </div>
+  </script>
+
+  <!-- USERS: Admin -->
+  <script type="text/ejs-template" id="tmpl-admin-users">
+    <div class="panel-card">
+      <div class="panel-card__header"><h3 class="panel-card__title">User Management</h3><button class="btn btn--primary btn--sm" onclick="alert('Add User (simulated)')">+ Add User</button></div>
+      <div class="panel-card__body">
+        <table class="data-table"><thead><tr><th>Name</th><th>Email</th><th>Role</th><th>Status</th></tr></thead><tbody>
+        <% for(var i=0; i<adminUsers.length; i++) { %>
+          <tr><td><strong><%= adminUsers[i].name %></strong></td><td><%= adminUsers[i].email %></td><td><%= adminUsers[i].role %></td><td><span class="status-badge status-badge--active"><%= adminUsers[i].status %></span></td></tr>
+        <% } %>
+        </tbody></table>
+      </div>
+    </div>
+  </script>
+
+  <!-- MAP DATA: Admin -->
+  <script type="text/ejs-template" id="tmpl-admin-map-data">
+    <div class="panel-card" style="margin-bottom:var(--space-xl);">
+      <div class="panel-card__header"><h3 class="panel-card__title">Map Data Management</h3><button class="btn btn--primary btn--sm" onclick="alert('Add Location (simulated)')">+ Add Location</button></div>
+      <div class="panel-card__body"><p style="color:var(--gray-600);font-size:0.9rem;margin-bottom:var(--space-md);">Manage building data, coordinates, descriptions, and images displayed on the interactive campus map.</p>
+        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3887.5!2d123.37362!3d13.40591!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x33a1917e76579b27%3A0x2e6b0c7b1e2df2a7!2sCamarines%20Sur%20Polytechnic%20Colleges!5e0!3m2!1sen!2sph" width="100%" height="300" style="border:0;border-radius:12px;" allowfullscreen="" loading="lazy" title="CSPC Map Admin"></iframe>
+      </div>
+    </div>
+  </script>
+
+  <!-- NEWS EDITOR: Admin -->
+  <script type="text/ejs-template" id="tmpl-admin-news-editor">
+    <div class="panel-card">
+      <div class="panel-card__header"><h3 class="panel-card__title">News / FAQ Editor</h3><button class="btn btn--primary btn--sm" onclick="alert('Add Article (simulated)')">+ New Article</button></div>
+      <div class="panel-card__body">
+        <table class="data-table"><thead><tr><th>Title</th><th>Category</th><th>Date</th></tr></thead><tbody>
+        <% for(var i=0; i<news.length; i++) { %>
+          <tr><td><strong><%= news[i].title %></strong></td><td><span class="news-item__category"><%= news[i].category %></span></td><td><%= news[i].date %></td></tr>
+        <% } %>
+        </tbody></table>
+      </div>
+    </div>
+  </script>
+
+  <!-- LOGS: Admin -->
+  <script type="text/ejs-template" id="tmpl-admin-logs">
+    <div class="panel-card">
+      <div class="panel-card__header"><h3 class="panel-card__title">System Logs</h3></div>
+      <div class="panel-card__body">
+        <table class="data-table"><thead><tr><th>Time</th><th>Action</th><th>User</th><th>Detail</th></tr></thead><tbody>
+        <% for(var i=0; i<logs.length; i++) { %>
+          <tr><td><%= logs[i].time %></td><td><strong><%= logs[i].action %></strong></td><td><%= logs[i].user %></td><td style="color:var(--gray-400);font-size:0.8rem;"><%= logs[i].detail %></td></tr>
+        <% } %>
+        </tbody></table>
+      </div>
+    </div>
+  </script>
+
+  <!-- OVERVIEW: Guest -->
+  <script type="text/ejs-template" id="tmpl-guest-overview">
+    <div class="stat-cards">
+      <div class="stat-card"><div class="stat-card__icon stat-card__icon--blue">🏢</div><div class="stat-card__label">Buildings</div><div class="stat-card__value stat-card__value--sm"><%= guestBuildings.length %></div></div>
+      <div class="stat-card"><div class="stat-card__icon stat-card__icon--green">📰</div><div class="stat-card__label">News</div><div class="stat-card__value stat-card__value--sm"><%= news.length %></div></div>
+      <div class="stat-card"><div class="stat-card__icon stat-card__icon--gold">🏆</div><div class="stat-card__label">Achievements</div><div class="stat-card__value stat-card__value--sm"><%= achievements.length %></div></div>
+      <div class="stat-card"><div class="stat-card__icon stat-card__icon--red">🗺️</div><div class="stat-card__label">Campus Map</div><div class="stat-card__value stat-card__value--sm">2D View</div></div>
+    </div>
+    <div class="panel-card">
+      <div class="panel-card__header"><h3 class="panel-card__title">Welcome, Guest!</h3></div>
+      <div class="panel-card__body"><p style="color:var(--gray-600);font-size:0.9rem;line-height:1.7;">Welcome to CampusSphere! As a guest, you can explore building corridors, read news & events, view public achievements, and browse the 2D campus map. Sign in with a <strong>@cspc.edu.ph</strong> email for full student or faculty access.</p></div>
+    </div>
+  </script>
+
+  <!-- CORRIDORS: Guest -->
+  <script type="text/ejs-template" id="tmpl-guest-corridors">
+    <div class="panel-card">
+      <div class="panel-card__header"><h3 class="panel-card__title">Building Corridors</h3></div>
+      <div class="panel-card__body">
+        <div class="stat-cards" style="margin-bottom:0;">
+          <% for(var i=0; i<guestBuildings.length; i++) { %>
+            <div class="stat-card" style="cursor:default;">
+              <div class="stat-card__icon stat-card__icon--blue">🏢</div>
+              <div class="stat-card__label" style="margin-bottom:4px;"><%= guestBuildings[i].name %></div>
+              <p style="font-size:0.82rem;color:var(--gray-600);line-height:1.5;margin:0 0 6px;"><%= guestBuildings[i].description %></p>
+              <div style="font-size:0.75rem;font-weight:600;color:var(--navy-600);">Floors: <%= guestBuildings[i].floors %></div>
+            </div>
+          <% } %>
+        </div>
+      </div>
+    </div>
+  </script>
+
+  <!-- NEWS & EVENTS: Guest -->
+  <script type="text/ejs-template" id="tmpl-guest-news-events">
+    <div class="panel-card">
+      <div class="panel-card__header"><h3 class="panel-card__title">News & Events</h3></div>
+      <div class="panel-card__body">
+        <% for(var i=0; i<news.length; i++) { %>
+          <div class="news-item">
+            <span class="news-item__category"><%= news[i].category %></span>
+            <div class="news-item__title"><%= news[i].title %></div>
+            <div class="news-item__date"><%= news[i].date %></div>
+            <p class="news-item__excerpt"><%= news[i].excerpt %></p>
+          </div>
+        <% } %>
+      </div>
+    </div>
+  </script>
+
+  <!-- ACHIEVEMENTS: Guest -->
+  <script type="text/ejs-template" id="tmpl-guest-achievements">
+    <div class="panel-card">
+      <div class="panel-card__header"><h3 class="panel-card__title">Public News & Achievements</h3></div>
+      <div class="panel-card__body">
+        <% for(var i=0; i<achievements.length; i++) { %>
+          <div class="news-item">
+            <span class="news-item__category"><%= achievements[i].year %></span>
+            <div class="news-item__title">🏆 <%= achievements[i].title %></div>
+            <p class="news-item__excerpt"><%= achievements[i].detail %></p>
+          </div>
+        <% } %>
+      </div>
+    </div>
+  </script>
+
+  <!-- =========================================================
+       DATA + EJS TEMPLATE ENGINE
+       ========================================================= -->
+  <script src="data.js"></script>
+  <script>
+    // ======= CLIENT-SIDE EJS TEMPLATE ENGINE =======
+    function ejsRender(templateStr, data) {
+      // Process <% code %>, <%= output %>, <%- raw %>
+      let fn = 'var __o = [];\n';
+      fn += 'with(data) {\n';
+      let cursor = 0;
+      const re = /<%(-|=)?([\s\S]*?)%>/g;
+      let match;
+
+      while ((match = re.exec(templateStr)) !== null) {
+        // Push text before the tag
+        const text = templateStr.slice(cursor, match.index);
+        if (text) fn += '__o.push(' + JSON.stringify(text) + ');\n';
+        cursor = re.lastIndex;
+
+        if (match[1] === '=') {
+          // Escaped output
+          fn += '__o.push(String(' + match[2].trim() + '));\n';
+        } else if (match[1] === '-') {
+          // Raw output
+          fn += '__o.push(' + match[2].trim() + ');\n';
+        } else {
+          // Code execution
+          fn += match[2] + '\n';
+        }
+      }
+
+      // Push remaining text
+      fn += '__o.push(' + JSON.stringify(templateStr.slice(cursor)) + ');\n';
+      fn += '}\nreturn __o.join("");';
+
+      try {
+        return new Function('data', fn)(data);
+      } catch (e) {
+        console.error('EJS Render Error:', e);
+        return '<p style="color:red;">Template render error</p>';
+      }
+    }
+
+    // ======= TEMPLATE MAPPING PER ROLE/SECTION =======
+    const templateMap = {
+      'student-cspc': {
+        'overview': 'tmpl-student-cspc-overview',
+        'profile': 'tmpl-student-cspc-profile',
+        'enrollment': 'tmpl-student-cspc-enrollment',
+        'schedule': 'tmpl-student-cspc-schedule',
+        'news': 'tmpl-shared-news',
+        'map': 'tmpl-shared-map',
+      },
+      'student-non-cspc': {
+        'overview': 'tmpl-student-non-cspc-overview',
+        'offices': 'tmpl-student-non-cspc-offices',
+        'admission': 'tmpl-student-non-cspc-admission',
+        'map': 'tmpl-shared-map',
+      },
+      'instructor': {
+        'overview': 'tmpl-instructor-overview',
+        'profile': 'tmpl-instructor-profile',
+        'all-rooms': 'tmpl-instructor-all-rooms',
+        'rooms': 'tmpl-instructor-rooms',
+        'schedule': 'tmpl-instructor-schedule',
+        'announcements': 'tmpl-instructor-announcements',
+        'status': 'tmpl-instructor-status',
+      },
+      'admin': {
+        'overview': 'tmpl-admin-overview',
+        'users': 'tmpl-admin-users',
+        'map-data': 'tmpl-admin-map-data',
+        'news-editor': 'tmpl-admin-news-editor',
+        'logs': 'tmpl-admin-logs',
+      },
+      'guest': {
+        'overview': 'tmpl-guest-overview',
+        'corridors': 'tmpl-guest-corridors',
+        'news-events': 'tmpl-guest-news-events',
+        'achievements': 'tmpl-guest-achievements',
+        'map': 'tmpl-shared-map',
+      }
+    };
+
+    // ======= STATE =======
+    let currentRole = 'student-cspc';
+    let currentSection = 'overview';
+
+    // ======= DOM REFERENCES =======
+    const roleTitle = document.getElementById('roleTitle');
+    const roleBadge = document.getElementById('roleBadge');
+    const sidebarNav = document.getElementById('sidebarNav');
+    const contentContainer = document.getElementById('contentContainer');
+    const panelGreeting = document.getElementById('panelGreeting');
+    const panelRoleLabel = document.getElementById('panelRoleLabel');
+    const sidebarName = document.getElementById('sidebarName');
+    const sidebarEmail = document.getElementById('sidebarEmail');
+    const navUsername = document.getElementById('navUsername');
+
+    // ======= ICON SVGs =======
+    const icons = {
+      home: '<svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>',
+      user: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>',
+      book: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>',
+      calendar: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>',
+      bell: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>',
+      map: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="1 6 1 22 8 18 16 22 23 18 23 2 16 6 8 2 1 6"/><line x1="8" y1="2" x2="8" y2="18"/><line x1="16" y1="6" x2="16" y2="22"/></svg>',
+      info: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>',
+      megaphone: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>',
+      door: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="2" width="16" height="20" rx="2"/><path d="M9 22v-4h6v4"/><path d="M8 6h.01"/><path d="M16 6h.01"/></svg>',
+      check: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>',
+      users: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>',
+      edit: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>',
+      file: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>',
+      phone: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>',
+    };
+
+    // ======= RENDER SIDEBAR NAV =======
+    function renderSidebar(role) {
+      const items = CampuSphereData.sidebarNav[role] || [];
+      sidebarNav.innerHTML = items.map(item =>
+        `<button class="sidebar__nav-item ${item.id === currentSection ? 'sidebar__nav-item--active' : ''}" data-section="${item.id}">
+          <span class="sidebar__nav-icon">${icons[item.icon] || ''}</span>
+          ${item.label}
+        </button>`
+      ).join('');
+
+      // Add click handlers
+      sidebarNav.querySelectorAll('.sidebar__nav-item').forEach(btn => {
+        btn.addEventListener('click', () => switchSection(btn.dataset.section));
+      });
+    }
+
+    // ======= RENDER CONTENT SECTION =======
+    function renderContent(role, section) {
+      const map = templateMap[role];
+      if (!map) return;
+
+      const templateId = map[section];
+      if (!templateId) return;
+
+      const tmplEl = document.getElementById(templateId);
+      if (!tmplEl) return;
+
+      const html = ejsRender(tmplEl.textContent, CampuSphereData);
+      contentContainer.innerHTML = html;
+    }
+
+    // ======= SWITCH SECTION =======
+    function switchSection(sectionId) {
+      currentSection = sectionId;
+      renderSidebar(currentRole);
+      renderContent(currentRole, currentSection);
+
+      // Close sidebar on mobile
+      document.getElementById('sidebar').classList.remove('open');
+    }
+
+    // ======= SWITCH ROLE =======
+    function switchRole(role) {
+      currentRole = role;
+      currentSection = 'overview';
+      const roleInfo = CampuSphereData.roles[role];
+
+      // Update role title and badge
+      roleTitle.textContent = roleInfo.label;
+      roleBadge.textContent = roleInfo.badge;
+      roleBadge.style.background = roleInfo.color;
+
+      // Update panel header
+      const names = {
+        'student-cspc': 'Aaron',
+        'student-non-cspc': 'Student',
+        'instructor': 'Dr. Santos',
+        'admin': 'Admin',
+        'guest': 'Guest'
+      };
+      panelGreeting.textContent = `Welcome, ${names[role]}!`;
+      panelRoleLabel.textContent = `${roleInfo.label} — ${roleInfo.badge}`;
+      navUsername.textContent = names[role];
+
+      // Update sidebar user
+      const emails = {
+        'student-cspc': 'aaron@cspc.edu.ph',
+        'student-non-cspc': 'student@gmail.com',
+        'instructor': 'maria.santos@cspc.edu.ph',
+        'admin': 'admin@cspc.edu.ph',
+        'guest': 'guest@gmail.com'
+      };
+      const fullNames = {
+        'student-cspc': 'Aaron V. Lasprillas',
+        'student-non-cspc': 'Guest Student',
+        'instructor': 'Dr. Maria Santos',
+        'admin': 'System Administrator',
+        'guest': 'Guest User'
+      };
+      sidebarName.textContent = fullNames[role];
+      sidebarEmail.textContent = emails[role];
+
+      renderSidebar(role);
+      renderContent(role, 'overview');
+    }
+
+    // ======= EVENT LISTENERS =======
+
+    // Navbar scroll
+    const dashNav = document.getElementById('dashNav');
+    window.addEventListener('scroll', () => dashNav.classList.toggle('scrolled', window.scrollY > 10));
+
+    // Mobile hamburger
+    const dashHamburger = document.getElementById('dashHamburger');
+    const dashTabs = document.getElementById('dashTabs');
+    dashHamburger.addEventListener('click', () => {
+      dashHamburger.classList.toggle('active');
+      dashTabs.classList.toggle('open');
+    });
+
+    // Sidebar mobile toggle
+    const sidebarToggle = document.getElementById('sidebarToggle');
+    const sidebar = document.getElementById('sidebar');
+    sidebarToggle.addEventListener('click', () => sidebar.classList.toggle('open'));
+
+    // Close sidebar on outside click (mobile)
+    document.addEventListener('click', (e) => {
+      if (window.innerWidth <= 900 && !sidebar.contains(e.target) && e.target !== sidebarToggle && !sidebarToggle.contains(e.target)) {
+        sidebar.classList.remove('open');
+      }
+    });
+
+    // ======= INIT =======
+    const savedRole = localStorage.getItem('campusphere-role') || 'student-cspc';
+    switchRole(savedRole);
+
+    // ======= THEME TOGGLE =======
+    (function () {
+      const toggle = document.getElementById('themeToggle');
+      const saved = localStorage.getItem('campussphere-theme');
+      if (saved === 'dark') document.documentElement.setAttribute('data-theme', 'dark');
+      toggle.addEventListener('click', () => {
+        const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+        if (isDark) { document.documentElement.removeAttribute('data-theme'); localStorage.setItem('campussphere-theme', 'light'); }
+        else { document.documentElement.setAttribute('data-theme', 'dark'); localStorage.setItem('campussphere-theme', 'dark'); }
+      });
+    })();
+  </script>
+  <!-- Edit Profile Script -->
+  <script src="profile-script.js"></script>
+  <script src="nav-role.js"></script>
+</body>
+
+</html>
