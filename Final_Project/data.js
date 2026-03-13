@@ -26,16 +26,17 @@ const CampuSphereData = {
     ],
     'student-non-cspc': [
       { id: 'overview', icon: 'home', label: 'Overview' },
-      { id: 'news', icon: 'bell', label: 'News' },
+      { id: 'offices', icon: 'door', label: 'Campus Offices' },
+      { id: 'admission', icon: 'book', label: 'Admission Info' },
       { id: 'map', icon: 'map', label: 'Campus Map' },
-      { id: 'info', icon: 'info', label: 'General Info' },
     ],
     'instructor': [
       { id: 'overview', icon: 'home', label: 'Overview' },
       { id: 'profile', icon: 'user', label: 'Profile' },
-      { id: 'announcements', icon: 'megaphone', label: 'Announcements' },
+      { id: 'all-rooms', icon: 'door', label: 'All Rooms' },
       { id: 'rooms', icon: 'door', label: 'Assigned Rooms' },
-      { id: 'schedule', icon: 'calendar', label: 'Schedule' },
+      { id: 'schedule', icon: 'calendar', label: 'Teaching Schedule' },
+      { id: 'announcements', icon: 'megaphone', label: 'Instructor News' },
       { id: 'status', icon: 'check', label: 'Status' },
     ],
     'admin': [
@@ -47,9 +48,10 @@ const CampuSphereData = {
     ],
     'guest': [
       { id: 'overview', icon: 'home', label: 'Overview' },
-      { id: 'news', icon: 'bell', label: 'School News' },
-      { id: 'map', icon: 'map', label: 'Campus Map' },
-      { id: 'contact', icon: 'phone', label: 'Contact Info' },
+      { id: 'corridors', icon: 'door', label: 'Building Corridors' },
+      { id: 'news-events', icon: 'bell', label: 'News & Events' },
+      { id: 'achievements', icon: 'check', label: 'Achievements' },
+      { id: 'map', icon: 'map', label: 'Campus Map (2D)' },
     ]
   },
 
@@ -134,5 +136,75 @@ const CampuSphereData = {
     email: 'info@cspc.edu.ph',
     website: 'www.cspc.edu.ph',
     hours: 'Monday - Friday, 8:00 AM - 5:00 PM'
-  }
+  },
+
+  // ---- Campus Offices (for Non-CSPC / Freshmen) ----
+  campusOffices: [
+    { name: 'Registrar', location: 'Admin Building, Ground Floor', description: 'Handles student records, enrollment verification, and transcript requests.', hours: 'Mon-Fri 8:00 AM - 5:00 PM' },
+    { name: 'Cashier', location: 'Admin Building, Ground Floor', description: 'Processes tuition payments, releases financial clearances and receipts.', hours: 'Mon-Fri 8:00 AM - 4:00 PM' },
+    { name: 'ICTU (ICT Unit)', location: 'CCS Building, 2nd Floor', description: 'Manages student email accounts, LMS access, and campus Wi-Fi.', hours: 'Mon-Fri 8:00 AM - 5:00 PM' },
+    { name: 'Gate 1 — Main Entrance', location: 'Front of Campus, San Miguel Road', description: 'Main entry/exit point. Guard booth with visitor sign-in.' },
+    { name: 'Gate 2 — Back Gate', location: 'Rear of Campus, Barangay Road', description: 'Secondary entry/exit. Pedestrian and motorcycle access.' }
+  ],
+
+  // ---- Admission Info (for Non-CSPC) ----
+  admissionInfo: {
+    requirements: ['High School Report Card (Form 137 / SF10)', 'PSA Birth Certificate', '2x2 ID Photo (4 copies)', 'Certificate of Good Moral Character', 'CSPC Admission Test Results'],
+    steps: ['1. Visit the Registrar or apply online at cspc.edu.ph', '2. Submit the required documents', '3. Take the CSPC Admission Test', '4. Wait for admission results via email', '5. Proceed to enrollment upon acceptance'],
+    deadline: 'April 30, 2026',
+    contactEmail: 'admissions@cspc.edu.ph'
+  },
+
+  // ---- All Campus Rooms (for Instructor) ----
+  allRooms: [
+    { building: 'CCS Building', room: 'Room 301', type: 'Lecture', capacity: 45 },
+    { building: 'CCS Building', room: 'Room 302', type: 'Lecture', capacity: 45 },
+    { building: 'CCS Building', room: 'CompLab 1', type: 'Computer Lab', capacity: 40 },
+    { building: 'CCS Building', room: 'CompLab 2', type: 'Computer Lab', capacity: 40 },
+    { building: 'Academic Building', room: 'Room 101', type: 'Lecture', capacity: 50 },
+    { building: 'Academic Building', room: 'Room 102', type: 'Lecture', capacity: 50 },
+    { building: 'Academic Building', room: 'Room 201', type: 'Lecture', capacity: 40 },
+    { building: 'Academic Building', room: 'Room 205', type: 'Lecture', capacity: 40 },
+    { building: 'Engineering Building', room: 'ENG-101', type: 'Lecture', capacity: 45 },
+    { building: 'Engineering Building', room: 'ENG-Lab', type: 'Engineering Lab', capacity: 30 },
+    { building: 'Main Building', room: 'Function Hall', type: 'Multi-purpose', capacity: 200 },
+    { building: 'Gymnasium', room: 'Main Court', type: 'Sports', capacity: 500 }
+  ],
+
+  // ---- Guest Building Corridors ----
+  guestBuildings: [
+    { name: 'CCS Building', description: 'College of Computer Studies — houses lecture rooms and computer labs.', floors: 3 },
+    { name: 'Academic Building', description: 'General purpose academic building with classrooms and faculty offices.', floors: 3 },
+    { name: 'Engineering Building', description: 'Engineering labs, lecture rooms, and workshop spaces.', floors: 2 },
+    { name: 'Admin Building', description: 'Administrative offices including Registrar, Cashier, and HR.', floors: 2 },
+    { name: 'Library', description: 'Main campus library with reading areas and digital resources.', floors: 2 },
+    { name: 'Gymnasium', description: 'Indoor sports court and fitness facilities.', floors: 1 }
+  ],
+
+  // ---- Public Achievements ----
+  achievements: [
+    { title: 'Level IV Accreditation — BS Information Technology', year: '2025', detail: 'AACCUP granted Level IV status, the highest accreditation for the BSIT program.' },
+    { title: 'National IT Skills Competition — Champion', year: '2025', detail: 'CSPC students won 1st place in the national collegiate IT skills competition.' },
+    { title: 'ISO 9001:2015 Certified', year: '2024', detail: 'CSPC earned ISO certification for quality management systems.' },
+    { title: 'Best State College in Bicol Region', year: '2024', detail: 'Recognized by CHED as the top-performing state college in the region.' }
+  ]
 };
+
+// Override default profiles with localStorage data if modified by user
+if (typeof localStorage !== 'undefined') {
+  const savedStudent = localStorage.getItem('campusphere-student');
+  if (savedStudent) {
+    CampuSphereData.studentProfile = {
+      ...CampuSphereData.studentProfile,
+      ...JSON.parse(savedStudent)
+    };
+  }
+
+  const savedInstructor = localStorage.getItem('campusphere-instructor');
+  if (savedInstructor) {
+    CampuSphereData.instructorProfile = {
+      ...CampuSphereData.instructorProfile,
+      ...JSON.parse(savedInstructor)
+    };
+  }
+}

@@ -77,6 +77,19 @@
             <h1 class="auth-title">Welcome Back</h1>
             <p class="auth-subtitle">Sign in to your CampusSphere account</p>
 
+            <div style="margin-bottom: var(--space-lg); text-align: left;">
+                <label for="loginRole"
+                    style="display:block; font-size:0.82rem; font-weight:600; color:var(--gray-600); margin-bottom:6px; text-transform:uppercase; letter-spacing:0.04em;">Sign
+                    in as</label>
+                <select id="loginRole"
+                    style="width:100%; padding:0.6rem 0.8rem; font-family:var(--font-body); font-size:0.9rem; font-weight:500; color:var(--gray-800); background:var(--gray-50); border:1px solid var(--gray-200); border-radius:var(--radius-md); outline:none; cursor:pointer;">
+                    <option value="student-cspc">Student (CSPC)</option>
+                    <option value="student-non-cspc">Student (Non-CSPC)</option>
+                    <option value="instructor">Instructor</option>
+                    <option value="guest">Guest</option>
+                </select>
+            </div>
+
             <button type="button" class="btn btn--primary" style="width: 100%; justify-content: center;"
                 onclick="simulateGoogleLogin()">
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
@@ -119,8 +132,9 @@
 
     <script>
         function simulateGoogleLogin() {
-            // For sign-in, default to student or whatever they last picked
-            const lastRole = localStorage.getItem('campusphere-role') || 'student-cspc';
+            // Get the selected role from the dropdown
+            const selectedRole = document.getElementById('loginRole').value;
+            localStorage.setItem('campusphere-role', selectedRole);
 
             // Add a small delay for "loading" effect
             const btn = document.querySelector('.btn--primary');

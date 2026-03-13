@@ -1199,9 +1199,59 @@ html[data-theme="dark"] {
     background: linear-gradient(135deg, #060c18, #0f2240);
 }
 
+[data-theme="dark"] .stat__number {
+    color: #f3f4f6;
+}
+
+[data-theme="dark"] .stat__label {
+    color: rgba(255, 255, 255, 0.6);
+}
+
+/* Section label dark */
+[data-theme="dark"] .section__label {
+    color: var(--navy-400);
+}
+
 /* Footer dark */
 [data-theme="dark"] .footer {
     background: #060c18;
+}
+
+[data-theme="dark"] .footer__brand-name {
+    color: #f3f4f6;
+}
+
+[data-theme="dark"] .footer__desc {
+    color: rgba(255, 255, 255, 0.7);
+}
+
+[data-theme="dark"] .footer__heading {
+    color: #f3f4f6;
+}
+
+[data-theme="dark"] .footer__list a {
+    color: rgba(255, 255, 255, 0.6);
+}
+
+[data-theme="dark"] .footer__list a:hover {
+    color: #f3f4f6;
+}
+
+[data-theme="dark"] .footer__team-member {
+    color: rgba(255, 255, 255, 0.55);
+}
+
+[data-theme="dark"] .footer__bottom {
+    border-top-color: rgba(255, 255, 255, 0.08);
+    color: rgba(255, 255, 255, 0.5);
+}
+
+[data-theme="dark"] .footer__bottom-links a {
+    color: rgba(255, 255, 255, 0.5);
+}
+
+[data-theme="dark"] .footer__bottom-links a:hover {
+    color: #f3f4f6;
 }
 
 /* Buttons dark */
@@ -1214,4 +1264,208 @@ html[data-theme="dark"] {
     border-color: var(--navy-400);
     color: var(--navy-300);
     background: rgba(59, 130, 196, 0.08);
+}
+
+/* ========================================
+   PROFILE DROPDOWN & MODAL
+   ======================================== */
+.dash-nav__user {
+    position: relative;
+    cursor: pointer;
+}
+
+.profile-dropdown {
+    position: absolute;
+    top: 110%;
+    right: 0;
+    min-width: 180px;
+    background: var(--white);
+    border: 1px solid var(--gray-200);
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-lg);
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-10px);
+    transition: all var(--transition-fast);
+    z-index: 1000;
+}
+
+.profile-dropdown.show {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+.profile-dropdown__btn {
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+    width: 100%;
+    padding: var(--space-md) var(--space-lg);
+    border: none;
+    background: none;
+    text-align: left;
+    font-size: 0.9rem;
+    color: var(--navy-900);
+    cursor: pointer;
+    transition: background var(--transition-fast);
+}
+
+.profile-dropdown__btn:hover {
+    background: var(--gray-50);
+}
+
+.profile-dropdown__btn svg {
+    width: 16px;
+    height: 16px;
+    opacity: 0.7;
+}
+
+/* Edit Profile Modal */
+.edit-modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(10, 22, 40, 0.6);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+    opacity: 0;
+    visibility: hidden;
+    backdrop-filter: blur(4px);
+    transition: all var(--transition-base);
+}
+
+.edit-modal-overlay.show {
+    opacity: 1;
+    visibility: visible;
+}
+
+.edit-modal {
+    background: var(--white);
+    width: 90%;
+    max-width: 500px;
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-xl);
+    transform: scale(0.95) translateY(20px);
+    transition: all var(--transition-base);
+    overflow: hidden;
+}
+
+.edit-modal-overlay.show .edit-modal {
+    transform: scale(1) translateY(0);
+}
+
+.edit-modal__header {
+    padding: var(--space-lg) var(--space-xl);
+    border-bottom: 1px solid var(--gray-200);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.edit-modal__title {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--navy-900);
+}
+
+.edit-modal__close {
+    background: none;
+    border: none;
+    color: var(--gray-400);
+    cursor: pointer;
+    padding: 4px;
+    transition: color var(--transition-fast);
+}
+
+.edit-modal__close:hover {
+    color: var(--navy-900);
+}
+
+.edit-modal__body {
+    padding: var(--space-xl);
+    max-height: 70vh;
+    overflow-y: auto;
+}
+
+.edit-form-group {
+    margin-bottom: var(--space-md);
+}
+
+.edit-form-label {
+    display: block;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--gray-600);
+    margin-bottom: var(--space-xs);
+}
+
+.edit-form-input {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    border: 1px solid var(--gray-300);
+    border-radius: var(--radius-md);
+    font-family: inherit;
+    font-size: 0.95rem;
+    transition: border-color var(--transition-fast);
+}
+
+.edit-form-input:focus {
+    outline: none;
+    border-color: var(--navy-500);
+    box-shadow: 0 0 0 3px rgba(59, 130, 196, 0.1);
+}
+
+.edit-modal__footer {
+    padding: var(--space-lg) var(--space-xl);
+    border-top: 1px solid var(--gray-200);
+    display: flex;
+    justify-content: flex-end;
+    gap: var(--space-sm);
+    background: var(--gray-50);
+}
+
+/* Dark mode overrides for modal */
+[data-theme="dark"] .profile-dropdown {
+    background: #1f2537;
+    border-color: #2a3146;
+}
+
+[data-theme="dark"] .profile-dropdown__btn {
+    color: #e5e7eb;
+}
+
+[data-theme="dark"] .profile-dropdown__btn:hover {
+    background: #2a3146;
+}
+
+[data-theme="dark"] .edit-modal {
+    background: #1a1f2e;
+}
+
+[data-theme="dark"] .edit-modal__header,
+[data-theme="dark"] .edit-modal__footer {
+    border-color: #2a3146;
+}
+
+[data-theme="dark"] .edit-modal__footer {
+    background: #0f1523;
+}
+
+[data-theme="dark"] .edit-modal__title {
+    color: #f3f4f6;
+}
+
+[data-theme="dark"] .edit-form-input {
+    background: #111827;
+    border-color: #374151;
+    color: #e5e7eb;
+}
+
+[data-theme="dark"] .edit-form-input:focus {
+    border-color: var(--navy-500);
 }
