@@ -1,0 +1,705 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="CampusSphere — Browse upcoming academic, cultural, and sports events.">
+    <title>CampusSphere | Events</title>
+    <link rel="stylesheet" href="styles.css?v=2">
+    <link rel="stylesheet" href="home.css?v=2">
+    <link rel="icon" type="image/png" href="cspc-logo.png">
+    <style>
+        /* ===== PAGE LAYOUT ===== */
+        .events-page {
+            padding-top: 64px;
+            min-height: 100vh;
+            background: var(--gray-50);
+        }
+
+        /* ===== PAGE HERO ===== */
+        .events-hero {
+            position: relative;
+            height: 200px;
+            overflow: hidden;
+            background: linear-gradient(135deg, var(--navy-800), var(--navy-500));
+        }
+
+        .events-hero img {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center;
+            opacity: .25;
+            mix-blend-mode: overlay;
+        }
+
+        .events-hero__content {
+            position: relative;
+            z-index: 2;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 0 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .events-hero__title {
+            font-size: clamp(1.4rem, 3vw, 1.9rem);
+            font-weight: 700;
+            color: #fff;
+            margin-bottom: .25rem;
+        }
+
+        .events-hero__sub {
+            font-size: .92rem;
+            color: rgba(255, 255, 255, .75);
+        }
+
+        /* ===== MAIN WRAPPER ===== */
+        .events-main {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem 1.5rem 4rem;
+        }
+
+        /* ===== FILTER BAR & SEARCH ===== */
+        .events-toolbar {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        @media (min-width: 768px) {
+            .events-toolbar {
+                flex-direction: row;
+                align-items: center;
+                justify-content: space-between;
+            }
+        }
+
+        .events-filters {
+            display: flex;
+            align-items: center;
+            gap: .6rem;
+            flex-wrap: wrap;
+        }
+
+        .events-filter-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: .45rem 1.1rem;
+            border: 1.5px solid var(--gray-200);
+            border-radius: var(--radius-xl);
+            background: var(--white);
+            font-family: var(--font-body);
+            font-size: .85rem;
+            font-weight: 500;
+            color: var(--gray-600);
+            cursor: pointer;
+            transition: all .2s;
+        }
+
+        .events-filter-btn:hover {
+            border-color: var(--navy-400);
+            color: var(--navy-600);
+        }
+
+        .events-filter-btn.active {
+            background: var(--navy-600);
+            border-color: var(--navy-600);
+            color: #fff;
+        }
+
+        .events-count {
+            font-size: .82rem;
+            color: var(--gray-400);
+        }
+
+        /* ===== LIST LAYOUT ===== */
+        .events-list {
+            display: flex;
+            flex-direction: column;
+            gap: 1.25rem;
+        }
+
+        .event-card {
+            display: flex;
+            flex-direction: column;
+            background: var(--white);
+            border: 1px solid var(--gray-200);
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            transition: all .25s;
+        }
+
+        @media (min-width: 640px) {
+            .event-card {
+                flex-direction: row;
+                align-items: stretch;
+            }
+        }
+
+        .event-card:hover {
+            transform: translateX(4px);
+            box-shadow: var(--shadow-md);
+            border-color: rgba(30, 77, 140, .15);
+        }
+
+        /* Calendar View Block */
+        .event-cal {
+            flex-shrink: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            padding: 1rem;
+            background: var(--gray-50);
+            border-bottom: 1px solid var(--gray-200);
+        }
+
+        @media (min-width: 640px) {
+            .event-cal {
+                width: 130px;
+                border-bottom: none;
+                border-right: 1px solid var(--gray-200);
+            }
+        }
+
+        .event-cal__month {
+            font-size: .8rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            color: var(--navy-600);
+            letter-spacing: .05em;
+        }
+
+        .event-cal__day {
+            font-size: 2.2rem;
+            font-weight: 800;
+            color: var(--navy-900);
+            line-height: 1;
+            margin: .2rem 0;
+        }
+
+        .event-cal__year {
+            font-size: .85rem;
+            color: var(--gray-500);
+            font-weight: 500;
+        }
+
+        /* Event Body */
+        .event-body {
+            flex: 1;
+            padding: 1.25rem;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .event-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 1rem;
+            margin-bottom: .5rem;
+        }
+
+        .event-title {
+            font-size: 1.15rem;
+            font-weight: 700;
+            color: var(--navy-900);
+            line-height: 1.3;
+        }
+
+        .event-tag {
+            flex-shrink: 0;
+            padding: .2rem .7rem;
+            border-radius: var(--radius-xl);
+            font-size: .7rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: .05em;
+        }
+
+        .tag--academic {
+            background: rgba(30, 77, 140, .15);
+            color: var(--navy-700);
+        }
+
+        .tag--cultural {
+            background: rgba(139, 92, 246, .15);
+            color: #6d28d9;
+        }
+
+        .tag--sports {
+            background: rgba(234, 88, 12, .15);
+            color: #c2410c;
+        }
+
+        .event-desc {
+            font-size: .88rem;
+            color: var(--gray-600);
+            line-height: 1.5;
+            margin-bottom: 1rem;
+            flex: 1;
+        }
+
+        .event-meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            padding-top: 1rem;
+            border-top: 1px solid var(--gray-100);
+        }
+
+        .meta-item {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: .8rem;
+            color: var(--gray-500);
+            font-weight: 500;
+        }
+
+        .meta-item svg {
+            color: var(--navy-400);
+        }
+
+        /* Empty state */
+        .events-empty {
+            text-align: center;
+            padding: 4rem 2rem;
+            color: var(--gray-400);
+            display: none;
+        }
+
+        .events-empty svg {
+            margin: 0 auto .75rem;
+            opacity: .35;
+        }
+
+        /* Dark mode */
+        [data-theme="dark"] .events-page {
+            background: #0d1321;
+        }
+
+        [data-theme="dark"] .event-card {
+            background: #111827;
+            border-color: rgba(255, 255, 255, .07);
+        }
+
+        [data-theme="dark"] .event-cal {
+            background: #1f2537;
+            border-color: rgba(255, 255, 255, .05);
+        }
+
+        [data-theme="dark"] .event-title {
+            color: #e5e7eb;
+        }
+
+        [data-theme="dark"] .event-cal__month {
+            color: #60a5fa;
+        }
+
+        [data-theme="dark"] .event-cal__day {
+            color: #f3f4f6;
+        }
+
+        [data-theme="dark"] .event-cal__year {
+            color: #9ca3af;
+        }
+
+        [data-theme="dark"] .event-desc,
+        [data-theme="dark"] .meta-item {
+            color: #9ca3af;
+        }
+
+        [data-theme="dark"] .event-meta {
+            border-top-color: rgba(255, 255, 255, .05);
+        }
+
+        [data-theme="dark"] .events-filter-btn {
+            background: #111827;
+            border-color: rgba(255, 255, 255, .1);
+            color: #9ca3af;
+        }
+
+        [data-theme="dark"] .events-filter-btn:hover {
+            color: #e5e7eb;
+            border-color: var(--navy-400);
+        }
+
+        [data-theme="dark"] .events-filter-btn.active {
+            color: #fff;
+        }
+
+        [data-theme="dark"] .events-count {
+            color: #6b7280;
+        }
+
+        [data-theme="dark"] .tag--academic {
+            background: rgba(59, 130, 246, .2);
+            color: #93c5fd;
+        }
+
+        [data-theme="dark"] .tag--cultural {
+            background: rgba(139, 92, 246, .2);
+            color: #c4b5fd;
+        }
+
+        [data-theme="dark"] .tag--sports {
+            background: rgba(249, 115, 22, .2);
+            color: #fdba74;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- ===== NAVBAR ===== -->
+    <nav class="dash-nav" id="dashNav">
+        <div class="dash-nav__inner">
+            <a href="home.html" class="dash-nav__brand">
+                <img src="cspc-logo.png" alt="CSPC Logo" class="dash-nav__logo">
+                <span class="dash-nav__title">CampusSphere</span>
+            </a>
+            <div class="dash-nav__tabs" id="dashTabs">
+                <a href="home.html" class="dash-nav__tab" id="tabHome">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z" />
+                    </svg>
+                    <span>Home</span>
+                </a>
+                <a href="dashboard.html" class="dash-nav__tab" id="tabDashboard">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <rect x="3" y="3" width="7" height="7" />
+                        <rect x="14" y="3" width="7" height="7" />
+                        <rect x="14" y="14" width="7" height="7" />
+                        <rect x="3" y="14" width="7" height="7" />
+                    </svg>
+                    <span>Dashboard</span>
+                </a>
+                <a href="buildings.html" class="dash-nav__tab" id="tabBuildings">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <rect x="4" y="2" width="16" height="20" rx="2" />
+                        <path d="M9 22v-4h6v4" />
+                        <path d="M8 6h.01" />
+                        <path d="M16 6h.01" />
+                        <path d="M12 6h.01" />
+                        <path d="M12 10h.01" />
+                        <path d="M12 14h.01" />
+                        <path d="M16 10h.01" />
+                        <path d="M8 10h.01" />
+                    </svg>
+                    <span>Buildings</span>
+                </a>
+                <a href="events.html" class="dash-nav__tab dash-nav__tab--active" id="tabEvents">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <rect x="3" y="4" width="18" height="18" rx="2" />
+                        <line x1="16" y1="2" x2="16" y2="6" />
+                        <line x1="8" y1="2" x2="8" y2="6" />
+                        <line x1="3" y1="10" x2="21" y2="10" />
+                    </svg>
+                    <span>Events</span>
+                </a>
+                <a href="map.html" class="dash-nav__tab" id="tabMap">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <polygon points="1 6 1 22 8 18 16 22 23 18 23 2 16 6 8 2 1 6" />
+                        <line x1="8" y1="2" x2="8" y2="18" />
+                        <line x1="16" y1="6" x2="16" y2="22" />
+                    </svg>
+                    <span>Campus Map</span>
+                </a>
+                <a href="about.html" class="dash-nav__tab" id="tabAbout">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="10" />
+                        <line x1="12" y1="16" x2="12" y2="12" />
+                        <line x1="12" y1="8" x2="12.01" y2="8" />
+                    </svg>
+                    <span>About Us</span>
+                </a>
+            </div>
+            <div class="dash-nav__right">
+                <div class="dash-nav__user" id="userMenu">
+                    <div class="dash-nav__avatar">
+                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+                            <circle cx="12" cy="7" r="4" />
+                        </svg>
+                    </div>
+                    <span class="dash-nav__username" id="navUsername">User</span>
+                    <svg class="dash-nav__chevron" width="14" height="14" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                        <polyline points="6 9 12 15 18 9" />
+                    </svg>
+                </div>
+            </div>
+            <button class="dash-nav__hamburger" id="dashHamburger" aria-label="Toggle menu">
+                <span></span><span></span><span></span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- ===== PAGE ===== -->
+    <div class="events-page">
+
+        <!-- Hero -->
+        <div class="events-hero">
+            <img src="campus-hero.jpg" alt="Campus Event Background">
+            <div class="events-hero__content">
+                <h1 class="events-hero__title">Upcoming Events</h1>
+                <p class="events-hero__sub">Discover academic seminars, cultural fests, and sports tournaments on
+                    campus.</p>
+            </div>
+        </div>
+
+        <!-- Main -->
+        <div class="events-main">
+
+            <!-- Toolbar (Filters & Count) -->
+            <div class="events-toolbar">
+                <div class="events-filters" id="filterBar">
+                    <button class="events-filter-btn active" data-filter="all">All Events</button>
+                    <button class="events-filter-btn" data-filter="Academic">
+                        <span
+                            style="width:8px;height:8px;border-radius:50%;background:var(--navy-500);display:inline-block;"></span>
+                        Academic
+                    </button>
+                    <button class="events-filter-btn" data-filter="Cultural">
+                        <span
+                            style="width:8px;height:8px;border-radius:50%;background:#8b5cf6;display:inline-block;"></span>
+                        Cultural
+                    </button>
+                    <button class="events-filter-btn" data-filter="Sports">
+                        <span
+                            style="width:8px;height:8px;border-radius:50%;background:#f97316;display:inline-block;"></span>
+                        Sports
+                    </button>
+                </div>
+                <span class="events-count" id="eventCount"></span>
+            </div>
+
+            <!-- Events List -->
+            <div class="events-list" id="eventsList"></div>
+
+            <!-- Empty state -->
+            <div class="events-empty" id="emptyState">
+                <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                    <rect x="3" y="4" width="18" height="18" rx="2" />
+                    <line x1="16" y1="2" x2="16" y2="6" />
+                    <line x1="8" y1="2" x2="8" y2="6" />
+                    <line x1="3" y1="10" x2="21" y2="10" />
+                </svg>
+                <p>No upcoming events match this filter.</p>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Theme Toggle -->
+    <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode">
+        <svg class="icon-sun" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="5" />
+            <line x1="12" y1="1" x2="12" y2="3" />
+            <line x1="12" y1="21" x2="12" y2="23" />
+            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64" />
+            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78" />
+            <line x1="1" y1="12" x2="3" y2="12" />
+            <line x1="21" y1="12" x2="23" y2="12" />
+            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36" />
+            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22" />
+        </svg>
+        <svg class="icon-moon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+            stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:none;">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
+        </svg>
+    </button>
+
+    <script>
+        /* ===== SAMPLE DATA ===== */
+        const EVENTS = [
+            {
+                id: 1,
+                title: 'Annual Research Symposium',
+                category: 'Academic',
+                dateObj: new Date(2026, 2, 25), // Mar 25
+                desc: 'Join us for the annual gathering of minds where graduating students present their final year projects. Keynote by Dr. Aris B. Santos.',
+                location: 'Main Function Hall, Academic Bldg',
+                time: '8:00 AM - 4:00 PM'
+            },
+            {
+                id: 2,
+                title: 'Inter-College Basketball Finals',
+                category: 'Sports',
+                dateObj: new Date(2026, 3, 2), // Apr 2
+                desc: 'The climax of the sports fest! Come and support the Engineering vs. Business teams as they battle it out for the championship.',
+                location: 'CSPC Gymnasium',
+                time: '3:00 PM - 6:00 PM'
+            },
+            {
+                id: 3,
+                title: 'CSPC Arts & Music Fest 2026',
+                category: 'Cultural',
+                dateObj: new Date(2026, 3, 10), // Apr 10
+                desc: 'A vibrant celebration of campus talent featuring live bands, theater performances, and an open gallery of student artwork.',
+                location: 'Campus Quadrangle / Grandstand',
+                time: '5:00 PM onwards'
+            },
+            {
+                id: 4,
+                title: 'Tech Talk: AI in Engineering',
+                category: 'Academic',
+                dateObj: new Date(2026, 3, 15), // Apr 15
+                desc: 'An interactive seminar discussing the latest trends in artificial intelligence and its applications in civil and mechanical engineering.',
+                location: 'Room 201, Engineering Bldg',
+                time: '1:00 PM - 3:30 PM'
+            },
+            {
+                id: 5,
+                title: 'Intramurals Opening Ceremony',
+                category: 'Sports',
+                dateObj: new Date(2026, 4, 1), // May 1
+                desc: 'The grand opening of the 2026 Intramurals. Cheer dance competitions, parade of athletes, and the lighting of the torch.',
+                location: 'CSPC Track & Field Oval',
+                time: '7:00 AM - 12:00 NN'
+            }
+        ];
+
+        /* ===== TAG COLORS ===== */
+        const TAG_CLASS = { Academic: 'tag--academic', Cultural: 'tag--cultural', Sports: 'tag--sports' };
+
+        /* ===== DATE UTILS ===== */
+        const MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+
+        /* ===== RENDER LIST ===== */
+        function renderEvents(filter = 'all') {
+            const list = document.getElementById('eventsList');
+            const empty = document.getElementById('emptyState');
+            const countEl = document.getElementById('eventCount');
+
+            const filtered = filter === 'all' ? EVENTS : EVENTS.filter(e => e.category === filter);
+            countEl.textContent = 'Showing ' + filtered.length + ' event' + (filtered.length !== 1 ? 's' : '');
+
+            if (!filtered.length) {
+                list.innerHTML = '';
+                empty.style.display = 'block';
+                return;
+            }
+
+            empty.style.display = 'none';
+            list.innerHTML = filtered.map(e => {
+                const day = e.dateObj.getDate().toString().padStart(2, '0');
+                const month = MONTHS[e.dateObj.getMonth()];
+                const year = e.dateObj.getFullYear();
+
+                return `
+                <div class="event-card">
+                    <div class="event-cal">
+                        <span class="event-cal__month">${month}</span>
+                        <span class="event-cal__day">${day}</span>
+                        <span class="event-cal__year">${year}</span>
+                    </div>
+                    <div class="event-body">
+                        <div class="event-header">
+                            <h3 class="event-title">${e.title}</h3>
+                            <span class="event-tag ${TAG_CLASS[e.category]}">${e.category}</span>
+                        </div>
+                        <p class="event-desc">${e.desc}</p>
+                        <div class="event-meta">
+                            <div class="meta-item">
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>
+                                </svg>
+                                <span>${e.time}</span>
+                            </div>
+                            <div class="meta-item">
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/>
+                                </svg>
+                                <span>${e.location}</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>`;
+            }).join('');
+        }
+
+        /* ===== FILTER BUTTONS ===== */
+        document.querySelectorAll('.events-filter-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.querySelectorAll('.events-filter-btn').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                renderEvents(btn.dataset.filter);
+            });
+        });
+
+        /* ===== NAVBAR ===== */
+        const dashNav = document.getElementById('dashNav');
+        window.addEventListener('scroll', () => {
+            dashNav.classList.toggle('scrolled', window.scrollY > 10);
+        });
+        const hamburger = document.getElementById('dashHamburger');
+        const tabs = document.getElementById('dashTabs');
+        hamburger.addEventListener('click', () => {
+            hamburger.classList.toggle('active');
+            tabs.classList.toggle('open');
+        });
+
+        /* ===== USERNAME FROM localStorage ===== */
+        (function () {
+            const role = localStorage.getItem('campusphere-role') || 'guest';
+            const names = { 'student-cspc': 'Aaron', 'student-non-cspc': 'Student', 'instructor': 'Dr. Santos', 'admin': 'Admin', 'guest': 'Guest' };
+            document.getElementById('navUsername').textContent = names[role] || 'User';
+        })();
+
+        /* ===== THEME ===== */
+        (function () {
+            const toggle = document.getElementById('themeToggle');
+            const iconSun = toggle.querySelector('.icon-sun');
+            const iconMoon = toggle.querySelector('.icon-moon');
+
+            function updateThemeUI(isDark) {
+                if (isDark) {
+                    document.documentElement.setAttribute('data-theme', 'dark');
+                    iconSun.style.display = 'none';
+                    iconMoon.style.display = 'block';
+                } else {
+                    document.documentElement.removeAttribute('data-theme');
+                    iconSun.style.display = 'block';
+                    iconMoon.style.display = 'none';
+                }
+            }
+
+            if (localStorage.getItem('campussphere-theme') === 'dark') {
+                updateThemeUI(true);
+            }
+
+            toggle.addEventListener('click', () => {
+                const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+                updateThemeUI(!isDark);
+                localStorage.setItem('campussphere-theme', !isDark ? 'dark' : 'light');
+            });
+        })();
+
+        /* ===== INIT ===== */
+        renderEvents();
+    </script>
+    <!-- Edit Profile Script -->
+    <script src="profile-script.js"></script>
+    <script src="nav-role.js"></script>
+</body>
+
+</html>
