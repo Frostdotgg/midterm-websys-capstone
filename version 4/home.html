@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description"
+        content="CampuSphere Dashboard — Explore the CSPC campus interactively with maps, buildings, events, and more.">
+    <title>CampuSphere | Home Dashboard</title>
+    <link rel="stylesheet" href="styles.css?v=2">
+    <link rel="stylesheet" href="home.css?v=2">
+    <link rel="icon" type="image/png" href="cspc-logo.png">
+</head>
+
+<body>
+
+    <!-- ===== DASHBOARD NAVBAR ===== -->
+    <nav class="dash-nav" id="dashNav">
+        <div class="dash-nav__inner">
+            <!-- Brand -->
+            <a href="home.html" class="dash-nav__brand">
+                <img src="cspc-logo.png" alt="CSPC Logo" class="dash-nav__logo">
+                <span class="dash-nav__title">CampusSphere</span>
+            </a>
+
+            <!-- Navigation Tabs -->
+            <div class="dash-nav__tabs" id="dashTabs">
+                <a href="home.html" class="dash-nav__tab dash-nav__tab--active" id="tabHome">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z" />
+                    </svg>
+                    <span>Home</span>
+                </a>
+                <a href="dashboard.html" class="dash-nav__tab" id="tabDashboard">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <rect x="3" y="3" width="7" height="7" />
+                        <rect x="14" y="3" width="7" height="7" />
+                        <rect x="14" y="14" width="7" height="7" />
+                        <rect x="3" y="14" width="7" height="7" />
+                    </svg>
+                    <span>Dashboard</span>
+                </a>
+                <a href="buildings.html" class="dash-nav__tab" id="tabBuildings">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <rect x="4" y="2" width="16" height="20" rx="2" ry="2" />
+                        <path d="M9 22v-4h6v4" />
+                        <path d="M8 6h.01" />
+                        <path d="M16 6h.01" />
+                        <path d="M12 6h.01" />
+                        <path d="M12 10h.01" />
+                        <path d="M12 14h.01" />
+                        <path d="M16 10h.01" />
+                        <path d="M16 14h.01" />
+                        <path d="M8 10h.01" />
+                        <path d="M8 14h.01" />
+                    </svg>
+                    <span>Buildings</span>
+                </a>
+                <a href="events.html" class="dash-nav__tab" id="tabEvents">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <rect x="3" y="4" width="18" height="18" rx="2" ry="2" />
+                        <line x1="16" y1="2" x2="16" y2="6" />
+                        <line x1="8" y1="2" x2="8" y2="6" />
+                        <line x1="3" y1="10" x2="21" y2="10" />
+                    </svg>
+                    <span>Events</span>
+                </a>
+                <a href="map.html" class="dash-nav__tab" id="tabMap">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <polygon points="1 6 1 22 8 18 16 22 23 18 23 2 16 6 8 2 1 6" />
+                        <line x1="8" y1="2" x2="8" y2="18" />
+                        <line x1="16" y1="6" x2="16" y2="22" />
+                    </svg>
+                    <span>Campus Map</span>
+                </a>
+                <a href="about.html" class="dash-nav__tab" id="tabAbout">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="10" />
+                        <line x1="12" y1="16" x2="12" y2="12" />
+                        <line x1="12" y1="8" x2="12.01" y2="8" />
+                    </svg>
+                    <span>About Us</span>
+                </a>
+            </div>
+
+            <!-- Right: Notification + User -->
+            <div class="dash-nav__right">
+                <button class="dash-nav__icon-btn" id="notifBtn" aria-label="Notifications">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9" />
+                        <path d="M13.73 21a2 2 0 0 1-3.46 0" />
+                    </svg>
+                    <span class="dash-nav__notif-dot"></span>
+                </button>
+                <div class="dash-nav__user" id="userMenu">
+                    <div class="dash-nav__avatar">
+                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+                            <circle cx="12" cy="7" r="4" />
+                        </svg>
+                    </div>
+                    <span class="dash-nav__username">Aaron</span>
+                    <svg class="dash-nav__chevron" width="14" height="14" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                        <polyline points="6 9 12 15 18 9" />
+                    </svg>
+                </div>
+            </div>
+
+            <!-- Mobile Hamburger -->
+            <button class="dash-nav__hamburger" id="dashHamburger" aria-label="Toggle menu">
+                <span></span><span></span><span></span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- ===== HERO BANNER ===== -->
+    <section class="dash-hero" id="dashHero">
+        <div class="dash-hero__bg">
+            <img src="campus-hero.jpg" alt="CSPC Campus">
+            <div class="dash-hero__overlay"></div>
+        </div>
+        <div class="dash-hero__content">
+            <h1 class="dash-hero__title">Welcome to CampusSphere</h1>
+            <p class="dash-hero__subtitle">Explore the campus easily using the interactive map.</p>
+            <div class="dash-hero__actions">
+                <a href="map.html" class="btn btn--primary btn--hero">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <polygon points="1 6 1 22 8 18 16 22 23 18 23 2 16 6 8 2 1 6" />
+                        <line x1="8" y1="2" x2="8" y2="18" />
+                        <line x1="16" y1="6" x2="16" y2="22" />
+                    </svg>
+                    Open Campus Map
+                </a>
+                <a href="buildings.html" class="btn btn--white btn--hero">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <rect x="4" y="2" width="16" height="20" rx="2" ry="2" />
+                        <path d="M9 22v-4h6v4" />
+                        <path d="M8 6h.01" />
+                        <path d="M16 6h.01" />
+                        <path d="M12 6h.01" />
+                        <path d="M12 10h.01" />
+                    </svg>
+                    View Buildings
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== MAIN CONTENT ===== -->
+    <main class="dash-main">
+        <div class="dash-main__inner">
+
+            <!-- LEFT COLUMN -->
+            <div class="dash-main__left">
+
+                <!-- Search Bar -->
+                <div class="dash-search" id="searchSection">
+                    <div class="dash-search__bar">
+                        <svg class="dash-search__icon" width="18" height="18" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="11" cy="11" r="8" />
+                            <line x1="21" y1="21" x2="16.65" y2="16.65" />
+                        </svg>
+                        <input type="text" class="dash-search__input" id="searchInput" placeholder="Search Campus"
+                            autocomplete="off">
+                    </div>
+                </div>
+
+                <!-- Quick Access Cards -->
+                <div class="dash-quick" id="quickAccess">
+                    <a href="map.html" class="dash-quick__card">
+                        <div class="dash-quick__card-icon dash-quick__card-icon--map">
+                            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" />
+                                <circle cx="12" cy="10" r="3" />
+                            </svg>
+                        </div>
+                        <div class="dash-quick__card-info">
+                            <strong>Campus Map</strong>
+                            <small>Navigate Campus Location</small>
+                        </div>
+                    </a>
+                    <a href="buildings.html" class="dash-quick__card">
+                        <div class="dash-quick__card-icon dash-quick__card-icon--building">
+                            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <rect x="4" y="2" width="16" height="20" rx="2" ry="2" />
+                                <path d="M9 22v-4h6v4" />
+                                <path d="M8 6h.01" />
+                                <path d="M16 6h.01" />
+                                <path d="M12 6h.01" />
+                                <path d="M12 10h.01" />
+                            </svg>
+                        </div>
+                        <div class="dash-quick__card-info">
+                            <strong>Buildings</strong>
+                            <small>View all campus facilities</small>
+                        </div>
+                    </a>
+                    <a href="events.html" class="dash-quick__card">
+                        <div class="dash-quick__card-icon dash-quick__card-icon--event">
+                            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <rect x="3" y="4" width="18" height="18" rx="2" ry="2" />
+                                <line x1="16" y1="2" x2="16" y2="6" />
+                                <line x1="8" y1="2" x2="8" y2="6" />
+                                <line x1="3" y1="10" x2="21" y2="10" />
+                            </svg>
+                        </div>
+                        <div class="dash-quick__card-info">
+                            <strong>Events</strong>
+                            <small>Check out upcoming events</small>
+                        </div>
+                    </a>
+                    <a href="#" class="dash-quick__card">
+                        <div class="dash-quick__card-icon dash-quick__card-icon--office">
+                            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
+                                <polyline points="9 22 9 12 15 12 15 22" />
+                            </svg>
+                        </div>
+                        <div class="dash-quick__card-info">
+                            <strong>Offices</strong>
+                            <small>Find administrative offices</small>
+                        </div>
+                    </a>
+                </div>
+
+                <!-- Campus Map Preview -->
+                <div class="dash-map-preview" id="mapPreview">
+                    <div class="dash-map-preview__header">
+                        <h3 class="dash-map-preview__title">Campus Map</h3>
+                        <a href="map.html" class="btn btn--primary btn--sm">Open Full Map</a>
+                    </div>
+                    <div class="dash-map-preview__container">
+                        <iframe
+                            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3887.5!2d123.37362!3d13.40591!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x33a1917e76579b27%3A0x2e6b0c7b1e2df2a7!2sCamarines%20Sur%20Polytechnic%20Colleges!5e0!3m2!1sen!2sph!4v1700000000000!5m2!1sen!2sph"
+                            width="100%" height="300" style="border:0; border-radius: 12px;" allowfullscreen=""
+                            loading="lazy" referrerpolicy="no-referrer-when-downgrade"
+                            title="CSPC Campus Map - Nabua, Camarines Sur">
+                        </iframe>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- RIGHT COLUMN (Sidebar) -->
+            <div class="dash-main__right">
+
+                <!-- Featured Locations -->
+                <div class="dash-sidebar-card" id="featuredLocations">
+                    <div class="dash-sidebar-card__header">
+                        <h3 class="dash-sidebar-card__title">Featured Locations</h3>
+                        <a href="buildings.html" class="dash-sidebar-card__link">View All</a>
+                    </div>
+                    <div class="dash-sidebar-card__body">
+
+                        <div class="location-item">
+                            <div class="location-item__img">
+                                <img src="Camarines-sur-polytechnic-colleges.png" alt="Library">
+                            </div>
+                            <div class="location-item__info">
+                                <strong class="location-item__name">Library</strong>
+                                <div class="location-item__actions">
+                                    <a href="map.html" class="btn--tag btn--tag-primary">View on Map</a>
+                                    <a href="map.html" class="btn--tag btn--tag-outline">Open Map</a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="location-item">
+                            <div class="location-item__img">
+                                <img src="Camarines-sur-polytechnic-colleges.png" alt="CCS Building">
+                            </div>
+                            <div class="location-item__info">
+                                <strong class="location-item__name">CCS Building</strong>
+                                <div class="location-item__actions">
+                                    <a href="map.html" class="btn--tag btn--tag-primary">View on Map</a>
+                                    <a href="map.html" class="btn--tag btn--tag-outline">Open Map</a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="location-item">
+                            <div class="location-item__img">
+                                <img src="Camarines-sur-polytechnic-colleges.png" alt="Academic Building">
+                            </div>
+                            <div class="location-item__info">
+                                <strong class="location-item__name">Academic Building</strong>
+                                <div class="location-item__actions">
+                                    <a href="map.html" class="btn--tag btn--tag-primary">View on Map</a>
+                                    <a href="map.html" class="btn--tag btn--tag-outline">Open Map</a>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <!-- Upcoming Events -->
+                <div class="dash-sidebar-card" id="upcomingEvents">
+                    <div class="dash-sidebar-card__header">
+                        <h3 class="dash-sidebar-card__title">Upcoming Events</h3>
+                        <a href="events.html" class="dash-sidebar-card__link">View All</a>
+                    </div>
+                    <div class="dash-sidebar-card__body">
+
+                        <div class="event-item">
+                            <div class="event-item__date">
+                                <span class="event-item__day">10</span>
+                                <span class="event-item__month">March 10</span>
+                            </div>
+                            <div class="event-item__info">
+                                <strong class="event-item__name">Orientation Day</strong>
+                                <small class="event-item__time">8:45am - 1pm</small>
+                            </div>
+                        </div>
+
+                        <div class="event-item">
+                            <div class="event-item__date">
+                                <span class="event-item__day">19</span>
+                                <span class="event-item__month">March 19</span>
+                            </div>
+                            <div class="event-item__info">
+                                <strong class="event-item__name">Orientation Day</strong>
+                                <small class="event-item__time">10:45am - 3pm</small>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </main>
+
+    <!-- ===== FOOTER ===== -->
+    <footer class="dash-footer">
+        <div class="dash-footer__inner">
+            <p>&copy; 2026 Camarines Sur Polytechnic Colleges. All rights reserved.</p>
+            <p>CampusSphere - Your Digital Campus Guide</p>
+        </div>
+    </footer>
+
+    <!-- ===== SCRIPTS ===== -->
+    <script>
+        // ---- Dashboard Navbar scroll ----
+        const dashNav = document.getElementById('dashNav');
+        window.addEventListener('scroll', () => {
+            dashNav.classList.toggle('scrolled', window.scrollY > 10);
+        });
+
+        // ---- Mobile hamburger ----
+        const dashHamburger = document.getElementById('dashHamburger');
+        const dashTabs = document.getElementById('dashTabs');
+
+        dashHamburger.addEventListener('click', () => {
+            dashHamburger.classList.toggle('active');
+            dashTabs.classList.toggle('open');
+        });
+
+        // Close on tab click (mobile)
+        dashTabs.querySelectorAll('.dash-nav__tab').forEach(tab => {
+            tab.addEventListener('click', () => {
+                dashHamburger.classList.remove('active');
+                dashTabs.classList.remove('open');
+            });
+        });
+
+        // ---- Search functionality ----
+        const searchInput = document.getElementById('searchInput');
+        const quickCards = document.querySelectorAll('.dash-quick__card');
+
+        searchInput.addEventListener('input', (e) => {
+            const query = e.target.value.toLowerCase();
+            quickCards.forEach(card => {
+                const text = card.textContent.toLowerCase();
+                card.style.display = text.includes(query) ? '' : 'none';
+            });
+        });
+    </script>
+
+    <!-- Theme Toggle Button -->
+    <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode">
+        <svg class="icon-sun" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="5" />
+            <line x1="12" y1="1" x2="12" y2="3" />
+            <line x1="12" y1="21" x2="12" y2="23" />
+            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64" />
+            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78" />
+            <line x1="1" y1="12" x2="3" y2="12" />
+            <line x1="21" y1="12" x2="23" y2="12" />
+            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36" />
+            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22" />
+        </svg>
+        <svg class="icon-moon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
+        </svg>
+    </button>
+
+    <!-- Theme Toggle Script -->
+    <script>
+        (function () {
+            const toggle = document.getElementById('themeToggle');
+            const saved = localStorage.getItem('campussphere-theme');
+            if (saved === 'dark') document.documentElement.setAttribute('data-theme', 'dark');
+
+            toggle.addEventListener('click', () => {
+                const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+                if (isDark) {
+                    document.documentElement.removeAttribute('data-theme');
+                    localStorage.setItem('campussphere-theme', 'light');
+                } else {
+                    document.documentElement.setAttribute('data-theme', 'dark');
+                    localStorage.setItem('campussphere-theme', 'dark');
+                }
+            });
+        })();
+    </script>
+    <!-- Edit Profile Script -->
+    <script src="profile-script.js"></script>
+    <script src="nav-role.js"></script>
+</body>
+
+</html>
