@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CampuSphere Admin - Users</title>
+    <link rel="stylesheet" href="css/style.css">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="js/main.js" defer></script>
+</head>
+
+<body class="font-sans antialiased">
+    <div class="flex h-screen bg-background text-foreground overflow-hidden">
+
+        <!-- Sidebar -->
+        <aside id="sidebar"
+            class="relative flex h-screen flex-col bg-sidebar text-sidebar-foreground border-r border-sidebar-border transition-all duration-300 w-64 shrink-0">
+            <div class="flex items-center gap-3 px-4 py-5 border-b border-sidebar-border h-16">
+                <img src="../cspc-logo.png" alt="CSPC Logo" class="sidebar-logo shrink-0">
+                <div id="sidebar-header-full" class="flex flex-col">
+                    <span class="sidebar-brand-title">Campus<span>Sphere</span></span>
+                    <span class="sidebar-brand-sub">Admin Portal</span>
+                </div>
+            </div>
+            <nav class="flex-1 px-2 py-4 overflow-y-auto" style="display:flex; flex-direction:column; gap:2px;">
+                <a href="index.html"
+                    class="flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm transition-colors text-sidebar-foreground/70 hover:bg-sidebar-accent/50 hover:text-sidebar-foreground mt-1">
+                    <i data-lucide="layout-dashboard" class="h-5 w-5 shrink-0"></i><span
+                        class="sidebar-text">Dashboard</span>
+                </a>
+                <a href="users.html"
+                    class="flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm transition-colors bg-sidebar-accent text-sidebar-accent-foreground mt-1">
+                    <i data-lucide="users" class="h-5 w-5 shrink-0"></i><span class="sidebar-text">Users</span>
+                </a>
+                <a href="news.html"
+                    class="flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm transition-colors text-sidebar-foreground/70 hover:bg-sidebar-accent/50 hover:text-sidebar-foreground mt-1">
+                    <i data-lucide="newspaper" class="h-5 w-5 shrink-0"></i><span class="sidebar-text">News</span>
+                </a>
+                <a href="faqs.html"
+                    class="flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm transition-colors text-sidebar-foreground/70 hover:bg-sidebar-accent/50 hover:text-sidebar-foreground mt-1">
+                    <i data-lucide="help-circle" class="h-5 w-5 shrink-0"></i><span class="sidebar-text">FAQs</span>
+                </a>
+                <a href="logs.html"
+                    class="flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm transition-colors text-sidebar-foreground/70 hover:bg-sidebar-accent/50 hover:text-sidebar-foreground mt-1">
+                    <i data-lucide="file-text" class="h-5 w-5 shrink-0"></i><span class="sidebar-text">System
+                        Logs</span>
+                </a>
+                <a href="campus-map.html"
+                    class="flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm transition-colors text-sidebar-foreground/70 hover:bg-sidebar-accent/50 hover:text-sidebar-foreground mt-1">
+                    <i data-lucide="map" class="h-5 w-5 shrink-0"></i><span class="sidebar-text">Campus Map</span>
+                </a>
+                <a href="settings.html"
+                    class="flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm transition-colors text-sidebar-foreground/70 hover:bg-sidebar-accent/50 hover:text-sidebar-foreground mt-1">
+                    <i data-lucide="settings" class="h-5 w-5 shrink-0"></i><span class="sidebar-text">Settings</span>
+                </a>
+            </nav>
+            <div class="border-t border-sidebar-border p-4">
+                <div class="flex items-center gap-3">
+                    <div class="ui-avatar h-9 w-9 shrink-0">
+                        <div class="ui-avatar-fallback text-xs font-semibold">AD</div>
+                    </div>
+                    <div id="sidebar-user-full" class="flex flex-col flex-1 min-w-0">
+                        <span class="text-sm font-medium truncate">Admin User</span>
+                        <span class="text-xs text-sidebar-foreground/60 truncate">admin@cspc.edu.ph</span>
+                    </div>
+                    <button
+                        class="ui-button ui-button-ghost ui-button-size-icon h-8 w-8 text-sidebar-foreground/70 shrink-0 sidebar-text"><i
+                            data-lucide="log-out" class="h-4 w-4"></i></button>
+                </div>
+            </div>
+            <button id="sidebar-toggle"
+                class="ui-button ui-button-ghost ui-button-size-icon absolute -right-3 top-7 h-6 w-6 rounded-full border border-sidebar-border bg-sidebar text-sidebar-foreground hover:bg-sidebar-accent"
+                style="width:1.5rem; height:1.5rem; padding:0;">
+                <i id="sidebar-icon-left" data-lucide="chevron-left" class="h-3 w-3"></i>
+                <i id="sidebar-icon-right" data-lucide="chevron-right" class="h-3 w-3 hidden"></i>
+            </button>
+        </aside>
+
+        <!-- Main Content -->
+        <div class="flex flex-1 flex-col overflow-hidden">
+            <header class="flex h-16 items-center justify-between border-b border-border bg-card px-6 shrink-0">
+                <div>
+                    <h1 class="text-xl font-semibold text-foreground">User Management</h1>
+                    <p class="text-sm text-muted-foreground">Manage student, instructor, and admin accounts</p>
+                </div>
+                <div class="flex items-center gap-4">
+                    <div class="relative hidden md:block">
+                        <i data-lucide="search"
+                            class="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground"></i>
+                        <input type="search" placeholder="Search..."
+                            class="ui-input w-64 pl-9 bg-secondary/50 border-border">
+                    </div>
+                    <button class="ui-button ui-button-ghost ui-button-size-icon relative dropdown-trigger"
+                        data-dropdown-target="notifications-menu">
+                        <i data-lucide="bell" class="h-5 w-5"></i>
+                        <span
+                            class="ui-badge ui-badge-default absolute -right-1 -top-1 h-5 w-5 rounded-full p-0 flex items-center justify-center text-xs"
+                            style="padding:0; min-width:1.25rem;">3</span>
+                    </button>
+                    <div id="notifications-menu" class="dropdown-menu-content w-80 p-1"
+                        style="min-width: 20rem; right: 1.5rem;">
+                        <div class="px-2 py-1.5 text-sm font-semibold">Notifications</div>
+                        <div class="h-px bg-border my-1" style="margin:0.25rem 0;"></div>
+                        <div class="dropdown-menu-item flex flex-col items-start gap-1 p-3">
+                            <span class="font-medium text-foreground">New user registration</span>
+                            <span class="text-xs text-muted-foreground">John Doe registered as a student</span>
+                            <span class="text-xs text-muted-foreground">2 min ago</span>
+                        </div>
+                    </div>
+                </div>
+            </header>
+
+            <main class="flex-1 overflow-y-auto p-6" style="padding-bottom: 2rem;">
+                <div class="mx-auto max-w-7xl" style="display:flex; flex-direction:column; gap:1.5rem;">
+
+                    <!-- Stats -->
+                    <div class="grid gap-4 md:grid-cols-4">
+                        <div class="ui-card border-border">
+                            <div class="p-4">
+                                <div class="flex items-center gap-3">
+                                    <div class="rounded-lg bg-primary/10 p-2.5"><i data-lucide="users"
+                                            class="h-5 w-5 text-primary"></i></div>
+                                    <div>
+                                        <p class="text-sm text-muted-foreground">Total Users</p>
+                                        <p class="text-2xl font-bold text-foreground">2,847</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="ui-card border-border">
+                            <div class="p-4">
+                                <div class="flex items-center gap-3">
+                                    <div class="rounded-lg bg-chart-1/10 p-2.5"><i data-lucide="user-check"
+                                            class="h-5 w-5 text-chart-1"></i></div>
+                                    <div>
+                                        <p class="text-sm text-muted-foreground">Active</p>
+                                        <p class="text-2xl font-bold text-foreground">2,341</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="ui-card border-border">
+                            <div class="p-4">
+                                <div class="flex items-center gap-3">
+                                    <div class="rounded-lg bg-chart-4/10 p-2.5"><i data-lucide="user-x"
+                                            class="h-5 w-5 text-chart-4"></i></div>
+                                    <div>
+                                        <p class="text-sm text-muted-foreground">Inactive</p>
+                                        <p class="text-2xl font-bold text-foreground">506</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="ui-card border-border">
+                            <div class="p-4">
+                                <div class="flex items-center gap-3">
+                                    <div class="rounded-lg bg-chart-2/10 p-2.5"><i data-lucide="user-plus"
+                                            class="h-5 w-5 text-chart-2"></i></div>
+                                    <div>
+                                        <p class="text-sm text-muted-foreground">New This Month</p>
+                                        <p class="text-2xl font-bold text-foreground">127</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Actions Bar -->
+                    <div class="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between"
+                        style="display:flex; justify-content:space-between; align-items:center;">
+                        <div class="flex flex-1 items-center gap-3">
+                            <div class="relative flex-1 max-w-md w-full">
+                                <i data-lucide="search"
+                                    class="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground"></i>
+                                <input type="text" placeholder="Search users..." class="ui-input pl-9"
+                                    style="width:100%;">
+                            </div>
+                            <div class="relative inline-block text-left">
+                                <button
+                                    class="ui-button ui-button-outline ui-button-size-default dropdown-trigger flex items-center justify-between"
+                                    style="width:140px;" data-dropdown-target="role-filter-menu">
+                                    <span>All Roles</span>
+                                    <i data-lucide="chevron-down" class="h-4 w-4 opacity-50 ml-2"></i>
+                                </button>
+                                <div id="role-filter-menu" class="dropdown-menu-content p-1" style="width:140px;">
+                                    <div class="dropdown-menu-item bg-accent text-accent-foreground">All Roles</div>
+                                    <div class="dropdown-menu-item">Student</div>
+                                    <div class="dropdown-menu-item">Instructor</div>
+                                    <div class="dropdown-menu-item">Admin</div>
+                                    <div class="dropdown-menu-item">Guest</div>
+                                </div>
+                            </div>
+                            <div class="relative inline-block text-left">
+                                <button
+                                    class="ui-button ui-button-outline ui-button-size-default dropdown-trigger flex items-center justify-between"
+                                    style="width:140px;" data-dropdown-target="status-filter-menu">
+                                    <span>All Status</span>
+                                    <i data-lucide="chevron-down" class="h-4 w-4 opacity-50 ml-2"></i>
+                                </button>
+                                <div id="status-filter-menu" class="dropdown-menu-content p-1" style="width:140px;">
+                                    <div class="dropdown-menu-item bg-accent text-accent-foreground">All Status</div>
+                                    <div class="dropdown-menu-item">Active</div>
+                                    <div class="dropdown-menu-item">Inactive</div>
+                                </div>
+                            </div>
+                        </div>
+                        <button class="ui-button ui-button-default ui-button-size-default">
+                            <i data-lucide="plus" class="mr-2 h-4 w-4"></i>Add User
+                        </button>
+                    </div>
+
+                    <!-- Users Table -->
+                    <div class="ui-card border-border">
+                        <div class="p-6 pb-3" style="border-bottom:none;">
+                            <h3 class="text-lg font-semibold tracking-tight text-foreground">All Users (10)</h3>
+                        </div>
+                        <div class="p-0">
+                            <table class="ui-table">
+                                <thead>
+                                    <tr>
+                                        <th>User</th>
+                                        <th>Email</th>
+                                        <th>Role</th>
+                                        <th>Status</th>
+                                        <th>Last Active</th>
+                                        <th style="width:60px;"></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>
+                                            <div class="flex items-center gap-3">
+                                                <div class="ui-avatar h-9 w-9 shrink-0">
+                                                    <div class="ui-avatar-fallback text-xs font-semibold">CB</div>
+                                                </div>
+                                                <span class="text-sm font-medium">Carl Andrie D. Baldoza</span>
+                                            </div>
+                                        </td>
+                                        <td class="text-sm text-muted-foreground">carl.baldoza@cspc.edu.ph</td>
+                                        <td><span
+                                                class="ui-badge ui-badge-outline bg-chart-1/10 text-chart-1 border-chart-1/20">Student</span>
+                                        </td>
+                                        <td><span
+                                                class="ui-badge ui-badge-outline bg-chart-1/10 text-chart-1 border-chart-1/20">Active</span>
+                                        </td>
+                                        <td class="text-sm text-muted-foreground">2 min ago</td>
+                                        <td>
+                                            <button
+                                                class="ui-button ui-button-ghost ui-button-size-icon h-8 w-8 dropdown-trigger"
+                                                data-dropdown-target="user-1-menu"><i data-lucide="more-horizontal"
+                                                    class="h-4 w-4"></i></button>
+                                            <div id="user-1-menu" class="dropdown-menu-content p-1"
+                                                style="width:140px;">
+                                                <div class="dropdown-menu-item"><i data-lucide="eye"
+                                                        class="h-4 w-4 mr-2"></i>View</div>
+                                                <div class="dropdown-menu-item"><i data-lucide="edit"
+                                                        class="h-4 w-4 mr-2"></i>Edit</div>
+                                                <div class="h-px bg-border my-1"></div>
+                                                <div class="dropdown-menu-item text-destructive"><i
+                                                        data-lucide="trash-2" class="h-4 w-4 mr-2"></i>Delete</div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <div class="flex items-center gap-3">
+                                                <div class="ui-avatar h-9 w-9 shrink-0">
+                                                    <div class="ui-avatar-fallback text-xs font-semibold">CL</div>
+                                                </div>
+                                                <span class="text-sm font-medium">Carl Ryan P. Lagrimas</span>
+                                            </div>
+                                        </td>
+                                        <td class="text-sm text-muted-foreground">carl.lagrimas@cspc.edu.ph</td>
+                                        <td><span
+                                                class="ui-badge ui-badge-outline bg-chart-1/10 text-chart-1 border-chart-1/20">Student</span>
+                                        </td>
+                                        <td><span
+                                                class="ui-badge ui-badge-outline bg-chart-1/10 text-chart-1 border-chart-1/20">Active</span>
+                                        </td>
+                                        <td class="text-sm text-muted-foreground">5 min ago</td>
+                                        <td>
+                                            <button
+                                                class="ui-button ui-button-ghost ui-button-size-icon h-8 w-8 dropdown-trigger"
+                                                data-dropdown-target="user-2-menu"><i data-lucide="more-horizontal"
+                                                    class="h-4 w-4"></i></button>
+                                            <div id="user-2-menu" class="dropdown-menu-content p-1"
+                                                style="width:140px;">
+                                                <div class="dropdown-menu-item"><i data-lucide="eye"
+                                                        class="h-4 w-4 mr-2"></i>View</div>
+                                                <div class="dropdown-menu-item"><i data-lucide="edit"
+                                                        class="h-4 w-4 mr-2"></i>Edit</div>
+                                                <div class="h-px bg-border my-1"></div>
+                                                <div class="dropdown-menu-item text-destructive"><i
+                                                        data-lucide="trash-2" class="h-4 w-4 mr-2"></i>Delete</div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <div class="flex items-center gap-3">
+                                                <div class="ui-avatar h-9 w-9 shrink-0">
+                                                    <div class="ui-avatar-fallback text-xs font-semibold">OR</div>
+                                                </div>
+                                                <span class="text-sm font-medium">Ocean Derek L. Regondola</span>
+                                            </div>
+                                        </td>
+                                        <td class="text-sm text-muted-foreground">ocean.regondola@cspc.edu.ph</td>
+                                        <td><span
+                                                class="ui-badge ui-badge-outline bg-chart-1/10 text-chart-1 border-chart-1/20">Student</span>
+                                        </td>
+                                        <td><span
+                                                class="ui-badge ui-badge-outline bg-chart-1/10 text-chart-1 border-chart-1/20">Active</span>
+                                        </td>
+                                        <td class="text-sm text-muted-foreground">1 hour ago</td>
+                                        <td>
+                                            <button
+                                                class="ui-button ui-button-ghost ui-button-size-icon h-8 w-8 dropdown-trigger"
+                                                data-dropdown-target="user-3-menu"><i data-lucide="more-horizontal"
+                                                    class="h-4 w-4"></i></button>
+                                            <div id="user-3-menu" class="dropdown-menu-content p-1"
+                                                style="width:140px;">
+                                                <div class="dropdown-menu-item"><i data-lucide="eye"
+                                                        class="h-4 w-4 mr-2"></i>View</div>
+                                                <div class="dropdown-menu-item"><i data-lucide="edit"
+                                                        class="h-4 w-4 mr-2"></i>Edit</div>
+                                                <div class="h-px bg-border my-1"></div>
+                                                <div class="dropdown-menu-item text-destructive"><i
+                                                        data-lucide="trash-2" class="h-4 w-4 mr-2"></i>Delete</div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <div class="flex items-center gap-3">
+                                                <div class="ui-avatar h-9 w-9 shrink-0">
+                                                    <div class="ui-avatar-fallback text-xs font-semibold">AL</div>
+                                                </div>
+                                                <span class="text-sm font-medium">Aaron V. Lasprillas</span>
+                                            </div>
+                                        </td>
+                                        <td class="text-sm text-muted-foreground">aaron.lasprillas@cspc.edu.ph</td>
+                                        <td><span
+                                                class="ui-badge ui-badge-outline bg-chart-2/10 text-chart-2 border-chart-2/20">Instructor</span>
+                                        </td>
+                                        <td><span
+                                                class="ui-badge ui-badge-outline bg-chart-1/10 text-chart-1 border-chart-1/20">Active</span>
+                                        </td>
+                                        <td class="text-sm text-muted-foreground">3 hours ago</td>
+                                        <td>
+                                            <button
+                                                class="ui-button ui-button-ghost ui-button-size-icon h-8 w-8 dropdown-trigger"
+                                                data-dropdown-target="user-4-menu"><i data-lucide="more-horizontal"
+                                                    class="h-4 w-4"></i></button>
+                                            <div id="user-4-menu" class="dropdown-menu-content p-1"
+                                                style="width:140px;">
+                                                <div class="dropdown-menu-item"><i data-lucide="eye"
+                                                        class="h-4 w-4 mr-2"></i>View</div>
+                                                <div class="dropdown-menu-item"><i data-lucide="edit"
+                                                        class="h-4 w-4 mr-2"></i>Edit</div>
+                                                <div class="h-px bg-border my-1"></div>
+                                                <div class="dropdown-menu-item text-destructive"><i
+                                                        data-lucide="trash-2" class="h-4 w-4 mr-2"></i>Delete</div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <div class="flex items-center gap-3">
+                                                <div class="ui-avatar h-9 w-9 shrink-0">
+                                                    <div class="ui-avatar-fallback text-xs font-semibold">JP</div>
+                                                </div>
+                                                <span class="text-sm font-medium">John Lawrence A. Paga</span>
+                                            </div>
+                                        </td>
+                                        <td class="text-sm text-muted-foreground">john.paga@cspc.edu.ph</td>
+                                        <td><span
+                                                class="ui-badge ui-badge-outline bg-chart-4/10 text-chart-4 border-chart-4/20">Admin</span>
+                                        </td>
+                                        <td><span
+                                                class="ui-badge ui-badge-outline bg-chart-1/10 text-chart-1 border-chart-1/20">Active</span>
+                                        </td>
+                                        <td class="text-sm text-muted-foreground">Just now</td>
+                                        <td>
+                                            <button
+                                                class="ui-button ui-button-ghost ui-button-size-icon h-8 w-8 dropdown-trigger"
+                                                data-dropdown-target="user-5-menu"><i data-lucide="more-horizontal"
+                                                    class="h-4 w-4"></i></button>
+                                            <div id="user-5-menu" class="dropdown-menu-content p-1"
+                                                style="width:140px;">
+                                                <div class="dropdown-menu-item"><i data-lucide="eye"
+                                                        class="h-4 w-4 mr-2"></i>View</div>
+                                                <div class="dropdown-menu-item"><i data-lucide="edit"
+                                                        class="h-4 w-4 mr-2"></i>Edit</div>
+                                                <div class="h-px bg-border my-1"></div>
+                                                <div class="dropdown-menu-item text-destructive"><i
+                                                        data-lucide="trash-2" class="h-4 w-4 mr-2"></i>Delete</div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <div class="flex items-center gap-3">
+                                                <div class="ui-avatar h-9 w-9 shrink-0">
+                                                    <div class="ui-avatar-fallback text-xs font-semibold">MG</div>
+                                                </div>
+                                                <span class="text-sm font-medium">Maria G. Santos</span>
+                                            </div>
+                                        </td>
+                                        <td class="text-sm text-muted-foreground">maria.santos@gmail.com</td>
+                                        <td><span
+                                                class="ui-badge ui-badge-outline bg-muted text-muted-foreground border-border">Guest</span>
+                                        </td>
+                                        <td><span
+                                                class="ui-badge ui-badge-outline bg-chart-4/10 text-chart-4 border-chart-4/20">Inactive</span>
+                                        </td>
+                                        <td class="text-sm text-muted-foreground">2 days ago</td>
+                                        <td>
+                                            <button
+                                                class="ui-button ui-button-ghost ui-button-size-icon h-8 w-8 dropdown-trigger"
+                                                data-dropdown-target="user-6-menu"><i data-lucide="more-horizontal"
+                                                    class="h-4 w-4"></i></button>
+                                            <div id="user-6-menu" class="dropdown-menu-content p-1"
+                                                style="width:140px;">
+                                                <div class="dropdown-menu-item"><i data-lucide="eye"
+                                                        class="h-4 w-4 mr-2"></i>View</div>
+                                                <div class="dropdown-menu-item"><i data-lucide="edit"
+                                                        class="h-4 w-4 mr-2"></i>Edit</div>
+                                                <div class="h-px bg-border my-1"></div>
+                                                <div class="dropdown-menu-item text-destructive"><i
+                                                        data-lucide="trash-2" class="h-4 w-4 mr-2"></i>Delete</div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <!-- Dark Mode Toggle -->
+    <button id="admin-theme-toggle" class="admin-theme-toggle" aria-label="Toggle dark mode">
+        <span class="icon-sun">☀️</span>
+        <span class="icon-moon">🌙</span>
+    </button>
+
+    <script>lucide.createIcons();</script>
+</body>
+
+</html>
