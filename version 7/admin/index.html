@@ -1,0 +1,778 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CampuSphere Admin Dashboard</title>
+    <link rel="stylesheet" href="css/style.css">
+
+    <!-- Lucide Icons -> load via CDN for easy vanilla implementation -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="js/main.js" defer></script>
+</head>
+
+<body class="font-sans antialiased">
+    <div class="flex h-screen bg-background text-foreground overflow-hidden">
+
+        <!-- Sidebar -->
+        <aside id="sidebar"
+            class="relative flex h-screen flex-col bg-sidebar text-sidebar-foreground border-r border-sidebar-border transition-all duration-300 w-64 shrink-0">
+            <!-- Header -->
+            <div class="flex items-center gap-3 px-4 py-5 border-b border-sidebar-border h-16">
+                <img src="../cspc-logo.png" alt="CSPC Logo" class="sidebar-logo shrink-0">
+                <div id="sidebar-header-full" class="flex flex-col">
+                    <span class="sidebar-brand-title">Campu<span>Sphere</span></span>
+                    <span class="sidebar-brand-sub">Admin Portal</span>
+                </div>
+            </div>
+
+            <!-- Navigation -->
+            <nav class="flex-1 px-2 py-4 overflow-y-auto" style="display:flex; flex-direction:column; gap:2px;">
+                <a href="index.html"
+                    class="flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm transition-colors bg-sidebar-accent text-sidebar-accent-foreground mt-1">
+                    <i data-lucide="layout-dashboard" class="h-5 w-5 shrink-0"></i>
+                    <span class="sidebar-text">Dashboard</span>
+                </a>
+                <a href="users.html"
+                    class="flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm transition-colors text-sidebar-foreground/70 hover:bg-sidebar-accent/50 hover:text-sidebar-foreground mt-1">
+                    <i data-lucide="users" class="h-5 w-5 shrink-0"></i>
+                    <span class="sidebar-text">Users</span>
+                </a>
+                <a href="news.html"
+                    class="flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm transition-colors text-sidebar-foreground/70 hover:bg-sidebar-accent/50 hover:text-sidebar-foreground mt-1">
+                    <i data-lucide="newspaper" class="h-5 w-5 shrink-0"></i>
+                    <span class="sidebar-text">News</span>
+                </a>
+                <a href="faqs.html"
+                    class="flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm transition-colors text-sidebar-foreground/70 hover:bg-sidebar-accent/50 hover:text-sidebar-foreground mt-1">
+                    <i data-lucide="help-circle" class="h-5 w-5 shrink-0"></i>
+                    <span class="sidebar-text">FAQs</span>
+                </a>
+                <a href="logs.html"
+                    class="flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm transition-colors text-sidebar-foreground/70 hover:bg-sidebar-accent/50 hover:text-sidebar-foreground mt-1">
+                    <i data-lucide="file-text" class="h-5 w-5 shrink-0"></i>
+                    <span class="sidebar-text">System Logs</span>
+                </a>
+                <a href="campus-map.html"
+                    class="flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm transition-colors text-sidebar-foreground/70 hover:bg-sidebar-accent/50 hover:text-sidebar-foreground mt-1">
+                    <i data-lucide="map" class="h-5 w-5 shrink-0"></i>
+                    <span class="sidebar-text">Campus Map</span>
+                </a>
+                <a href="settings.html"
+                    class="flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm transition-colors text-sidebar-foreground/70 hover:bg-sidebar-accent/50 hover:text-sidebar-foreground mt-1">
+                    <i data-lucide="settings" class="h-5 w-5 shrink-0"></i>
+                    <span class="sidebar-text">Settings</span>
+                </a>
+            </nav>
+
+            <!-- User section -->
+            <div class="border-t border-sidebar-border p-4">
+                <div class="flex items-center gap-3">
+                    <div class="ui-avatar h-9 w-9 shrink-0">
+                        <div class="ui-avatar-fallback text-xs font-semibold">AD</div>
+                    </div>
+                    <div id="sidebar-user-full" class="flex flex-col flex-1 min-w-0">
+                        <span class="text-sm font-medium truncate">Admin User</span>
+                        <span class="text-xs text-sidebar-foreground/60 truncate">admin@cspc.edu.ph</span>
+                    </div>
+                    <button
+                        class="ui-button ui-button-ghost ui-button-size-icon h-8 w-8 text-sidebar-foreground/70 shrink-0 sidebar-text">
+                        <i data-lucide="log-out" class="h-4 w-4"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Collapse button -->
+            <button id="sidebar-toggle"
+                class="ui-button ui-button-ghost ui-button-size-icon absolute -right-3 top-7 h-6 w-6 rounded-full border border-sidebar-border bg-sidebar text-sidebar-foreground hover:bg-sidebar-accent"
+                style="width:1.5rem; height:1.5rem; padding:0;">
+                <i id="sidebar-icon-left" data-lucide="chevron-left" class="h-3 w-3"></i>
+                <i id="sidebar-icon-right" data-lucide="chevron-right" class="h-3 w-3 hidden"></i>
+            </button>
+        </aside>
+
+        <!-- Main Content Area -->
+        <div class="flex flex-1 flex-col overflow-hidden">
+            <!-- Header -->
+            <header class="flex h-16 items-center justify-between border-b border-border bg-card px-6 shrink-0">
+                <div>
+                    <h1 class="text-xl font-semibold text-foreground">Dashboard</h1>
+                    <p class="text-sm text-muted-foreground">Welcome back, Admin. Here's what's happening with
+                        CampusSphere.</p>
+                </div>
+
+                <div class="flex items-center gap-4">
+                    <!-- Search -->
+                    <div class="relative hidden md:block">
+                        <i data-lucide="search"
+                            class="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground"></i>
+                        <input type="search" placeholder="Search..."
+                            class="ui-input w-64 pl-9 bg-secondary/50 border-border">
+                    </div>
+
+                    <!-- Notifications Dropdown -->
+                    <button class="ui-button ui-button-ghost ui-button-size-icon relative dropdown-trigger"
+                        data-dropdown-target="notifications-menu">
+                        <i data-lucide="bell" class="h-5 w-5"></i>
+                        <span
+                            class="ui-badge ui-badge-default absolute -right-1 -top-1 h-5 w-5 rounded-full p-0 flex items-center justify-center text-xs"
+                            style="padding:0; min-width:1.25rem;">3</span>
+                    </button>
+
+                    <div id="notifications-menu" class="dropdown-menu-content w-80 p-1"
+                        style="min-width: 20rem; right: 1.5rem;">
+                        <div class="px-2 py-1.5 text-sm font-semibold">Notifications</div>
+                        <div class="h-px bg-border my-1" style="margin:0.25rem 0;"></div>
+
+                        <div class="dropdown-menu-item flex flex-col items-start gap-1 p-3">
+                            <span class="font-medium text-foreground">New user registration</span>
+                            <span class="text-xs text-muted-foreground">John Doe registered as a student</span>
+                            <span class="text-xs text-muted-foreground">2 min ago</span>
+                        </div>
+                        <div class="dropdown-menu-item flex flex-col items-start gap-1 p-3">
+                            <span class="font-medium text-foreground">System update available</span>
+                            <span class="text-xs text-muted-foreground">Version 1.2.0 is ready to install</span>
+                            <span class="text-xs text-muted-foreground">1 hour ago</span>
+                        </div>
+                        <div class="dropdown-menu-item flex flex-col items-start gap-1 p-3">
+                            <span class="font-medium text-foreground">New FAQ submission</span>
+                            <span class="text-xs text-muted-foreground">A user submitted a new question</span>
+                            <span class="text-xs text-muted-foreground">3 hours ago</span>
+                        </div>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Scrollable Content -->
+            <main class="flex-1 overflow-y-auto p-6" style="padding-bottom: 2rem;">
+                <div class="mx-auto max-w-7xl" style="display:flex; flex-direction:column; gap:1.5rem;">
+
+                    <!-- Stats Cards -->
+                    <div class="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
+                        <div class="ui-card border-border">
+                            <div class="p-6">
+                                <div class="flex items-center justify-between">
+                                    <div class="rounded-lg bg-primary/10 p-2.5">
+                                        <i data-lucide="users" class="h-5 w-5 text-primary"></i>
+                                    </div>
+                                    <div class="flex items-center gap-1 text-xs font-medium text-chart-1">
+                                        <i data-lucide="trending-up" class="h-3 w-3"></i>+12.5%
+                                    </div>
+                                </div>
+                                <div class="mt-4">
+                                    <h3 class="text-2xl font-bold text-foreground">2,847</h3>
+                                    <p class="text-sm font-medium text-foreground/80">Total Users</p>
+                                    <p class="mt-1 text-xs text-muted-foreground">Active users this month</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="ui-card border-border">
+                            <div class="p-6">
+                                <div class="flex items-center justify-between">
+                                    <div class="rounded-lg bg-primary/10 p-2.5">
+                                        <i data-lucide="graduation-cap" class="h-5 w-5 text-primary"></i>
+                                    </div>
+                                    <div class="flex items-center gap-1 text-xs font-medium text-chart-1">
+                                        <i data-lucide="trending-up" class="h-3 w-3"></i>+8.2%
+                                    </div>
+                                </div>
+                                <div class="mt-4">
+                                    <h3 class="text-2xl font-bold text-foreground">2,234</h3>
+                                    <p class="text-sm font-medium text-foreground/80">Students</p>
+                                    <p class="mt-1 text-xs text-muted-foreground">Enrolled students</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="ui-card border-border">
+                            <div class="p-6">
+                                <div class="flex items-center justify-between">
+                                    <div class="rounded-lg bg-primary/10 p-2.5">
+                                        <i data-lucide="newspaper" class="h-5 w-5 text-primary"></i>
+                                    </div>
+                                    <div class="flex items-center gap-1 text-xs font-medium text-chart-1">
+                                        <i data-lucide="trending-up" class="h-3 w-3"></i>+23.1%
+                                    </div>
+                                </div>
+                                <div class="mt-4">
+                                    <h3 class="text-2xl font-bold text-foreground">156</h3>
+                                    <p class="text-sm font-medium text-foreground/80">News Articles</p>
+                                    <p class="mt-1 text-xs text-muted-foreground">Published this month</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="ui-card border-border">
+                            <div class="p-6">
+                                <div class="flex items-center justify-between">
+                                    <div class="rounded-lg bg-primary/10 p-2.5">
+                                        <i data-lucide="map" class="h-5 w-5 text-primary"></i>
+                                    </div>
+                                    <div class="flex items-center gap-1 text-xs font-medium text-destructive">
+                                        <i data-lucide="trending-down" class="h-3 w-3"></i>-3.2%
+                                    </div>
+                                </div>
+                                <div class="mt-4">
+                                    <h3 class="text-2xl font-bold text-foreground">12.4K</h3>
+                                    <p class="text-sm font-medium text-foreground/80">Map Views</p>
+                                    <p class="mt-1 text-xs text-muted-foreground">Campus map interactions</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Charts Row -->
+                    <div class="grid gap-6 lg:grid-cols-3">
+                        <div class="lg:col-span-2">
+                            <div class="ui-card border-border h-full">
+                                <div class="p-6 pb-2" style="border-bottom:none;">
+                                    <h3 class="text-lg font-semibold tracking-tight text-foreground">User Activity</h3>
+                                    <p class="text-sm text-muted-foreground">Monthly active users and map interactions
+                                    </p>
+                                </div>
+                                <div class="p-6 pt-0">
+                                    <canvas id="activityChart" style="width:100%; height:300px;"></canvas>
+                                    <div class="mt-4 flex items-center justify-center gap-6">
+                                        <div class="flex items-center gap-2">
+                                            <div class="h-3 w-3 rounded-full" style="background:var(--navy-600);"></div>
+                                            <span class="text-sm text-muted-foreground">Users</span>
+                                        </div>
+                                        <div class="flex items-center gap-2">
+                                            <div class="h-3 w-3 rounded-full" style="background:var(--gold);"></div>
+                                            <span class="text-sm text-muted-foreground">Map Views</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div>
+                            <div class="ui-card border-border h-full">
+                                <div class="p-6 pb-2" style="border-bottom:none;">
+                                    <h3 class="text-lg font-semibold tracking-tight text-foreground">User Roles
+                                        Distribution</h3>
+                                    <p class="text-sm text-muted-foreground">Breakdown by role type</p>
+                                </div>
+                                <div class="p-6 pt-0">
+                                    <div class="flex items-center justify-center" style="height:200px;">
+                                        <svg id="roleChart" viewBox="0 0 200 200" width="180" height="180"></svg>
+                                    </div>
+                                    <div class="mt-4" style="display:flex; flex-direction:column; gap:0.5rem;">
+                                        <div class="flex items-center justify-between">
+                                            <div class="flex items-center gap-2">
+                                                <div class="h-3 w-3 rounded-full" style="background:#1a3a6b;"></div>
+                                                <span class="text-sm text-muted-foreground">Students (CSPC)</span>
+                                            </div>
+                                            <div class="flex items-center gap-2">
+                                                <span class="text-sm font-medium text-foreground">1,845</span>
+                                                <span class="text-xs text-muted-foreground">(64.8%)</span>
+                                            </div>
+                                        </div>
+                                        <div class="flex items-center justify-between">
+                                            <div class="flex items-center gap-2">
+                                                <div class="h-3 w-3 rounded-full" style="background:#2563a8;"></div>
+                                                <span class="text-sm text-muted-foreground">Students (Guest)</span>
+                                            </div>
+                                            <div class="flex items-center gap-2">
+                                                <span class="text-sm font-medium text-foreground">389</span>
+                                                <span class="text-xs text-muted-foreground">(13.7%)</span>
+                                            </div>
+                                        </div>
+                                        <div class="flex items-center justify-between">
+                                            <div class="flex items-center gap-2">
+                                                <div class="h-3 w-3 rounded-full" style="background:#d4a843;"></div>
+                                                <span class="text-sm text-muted-foreground">Instructors</span>
+                                            </div>
+                                            <div class="flex items-center gap-2">
+                                                <span class="text-sm font-medium text-foreground">156</span>
+                                                <span class="text-xs text-muted-foreground">(5.5%)</span>
+                                            </div>
+                                        </div>
+                                        <div class="flex items-center justify-between">
+                                            <div class="flex items-center gap-2">
+                                                <div class="h-3 w-3 rounded-full" style="background:#7c3aed;"></div>
+                                                <span class="text-sm text-muted-foreground">Admins</span>
+                                            </div>
+                                            <div class="flex items-center gap-2">
+                                                <span class="text-sm font-medium text-foreground">24</span>
+                                                <span class="text-xs text-muted-foreground">(0.8%)</span>
+                                            </div>
+                                        </div>
+                                        <div class="flex items-center justify-between">
+                                            <div class="flex items-center gap-2">
+                                                <div class="h-3 w-3 rounded-full" style="background:#6b7280;"></div>
+                                                <span class="text-sm text-muted-foreground">Guests</span>
+                                            </div>
+                                            <div class="flex items-center gap-2">
+                                                <span class="text-sm font-medium text-foreground">433</span>
+                                                <span class="text-xs text-muted-foreground">(15.2%)</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Quick Actions -->
+                    <div class="ui-card border-border">
+                        <div class="p-6 pb-3" style="border-bottom:none;">
+                            <h3 class="text-lg font-semibold tracking-tight text-foreground">Quick Actions</h3>
+                        </div>
+                        <div class="p-6 pt-0">
+                            <div class="grid grid-cols-2 md:grid-cols-3 gap-3">
+                                <button
+                                    class="ui-button ui-button-default h-auto flex-col items-start gap-2 p-4 text-left">
+                                    <i data-lucide="user-plus" class="h-5 w-5"></i>
+                                    <div>
+                                        <p class="text-sm font-medium">Add User</p>
+                                        <p class="text-xs font-normal"
+                                            style="color:var(--primary-foreground); opacity:0.8;">Register new student
+                                            or instructor</p>
+                                    </div>
+                                </button>
+                                <button
+                                    class="ui-button ui-button-outline h-auto flex-col items-start gap-2 p-4 text-left">
+                                    <i data-lucide="newspaper" class="h-5 w-5"></i>
+                                    <div>
+                                        <p class="text-sm font-medium">Post News</p>
+                                        <p class="text-xs text-muted-foreground font-normal">Create announcement</p>
+                                    </div>
+                                </button>
+                                <button
+                                    class="ui-button ui-button-outline h-auto flex-col items-start gap-2 p-4 text-left">
+                                    <i data-lucide="help-circle" class="h-5 w-5"></i>
+                                    <div>
+                                        <p class="text-sm font-medium">Add FAQ</p>
+                                        <p class="text-xs text-muted-foreground font-normal">Add new question</p>
+                                    </div>
+                                </button>
+                                <button
+                                    class="ui-button ui-button-outline h-auto flex-col items-start gap-2 p-4 text-left">
+                                    <i data-lucide="map" class="h-5 w-5"></i>
+                                    <div>
+                                        <p class="text-sm font-medium">Update Map</p>
+                                        <p class="text-xs text-muted-foreground font-normal">Modify campus map</p>
+                                    </div>
+                                </button>
+                                <button
+                                    class="ui-button ui-button-outline h-auto flex-col items-start gap-2 p-4 text-left">
+                                    <i data-lucide="file-text" class="h-5 w-5"></i>
+                                    <div>
+                                        <p class="text-sm font-medium">View Logs</p>
+                                        <p class="text-xs text-muted-foreground font-normal">Check system activity</p>
+                                    </div>
+                                </button>
+                                <button
+                                    class="ui-button ui-button-outline h-auto flex-col items-start gap-2 p-4 text-left">
+                                    <i data-lucide="settings" class="h-5 w-5"></i>
+                                    <div>
+                                        <p class="text-sm font-medium">Settings</p>
+                                        <p class="text-xs text-muted-foreground font-normal">Configure portal</p>
+                                    </div>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Content Row (Users & News) -->
+                    <div class="grid gap-6 lg:grid-cols-2">
+                        <!-- Recent Users -->
+                        <div class="ui-card border-border">
+                            <div class="p-6 pb-3" style="border-bottom:none;">
+                                <h3 class="text-lg font-semibold tracking-tight text-foreground">Recent Users</h3>
+                            </div>
+                            <div class="p-6 pt-0" style="display:flex; flex-direction:column; gap:1rem;">
+                                <div
+                                    class="flex items-center justify-between rounded-lg p-3 transition-colors hover:bg-muted/50">
+                                    <div class="flex items-center gap-3">
+                                        <div class="ui-avatar h-10 w-10">
+                                            <div class="ui-avatar-fallback text-xs font-medium"
+                                                style="font-size:0.7rem;">CB</div>
+                                        </div>
+                                        <div>
+                                            <p class="text-sm font-medium text-foreground">Carl Andrie D. Baldoza</p>
+                                            <p class="text-xs text-muted-foreground">carl.baldoza@cspc.edu.ph</p>
+                                        </div>
+                                    </div>
+                                    <span
+                                        class="ui-badge ui-badge-outline bg-chart-1/10 text-chart-1 border-chart-1/20">Student</span>
+                                </div>
+                                <div
+                                    class="flex items-center justify-between rounded-lg p-3 transition-colors hover:bg-muted/50">
+                                    <div class="flex items-center gap-3">
+                                        <div class="ui-avatar h-10 w-10">
+                                            <div class="ui-avatar-fallback text-xs font-medium"
+                                                style="font-size:0.7rem;">CL</div>
+                                        </div>
+                                        <div>
+                                            <p class="text-sm font-medium text-foreground">Carl Ryan P. Lagrimas</p>
+                                            <p class="text-xs text-muted-foreground">carl.lagrimas@cspc.edu.ph</p>
+                                        </div>
+                                    </div>
+                                    <span
+                                        class="ui-badge ui-badge-outline bg-chart-1/10 text-chart-1 border-chart-1/20">Student</span>
+                                </div>
+                                <div
+                                    class="flex items-center justify-between rounded-lg p-3 transition-colors hover:bg-muted/50">
+                                    <div class="flex items-center gap-3">
+                                        <div class="ui-avatar h-10 w-10">
+                                            <div class="ui-avatar-fallback text-xs font-medium"
+                                                style="font-size:0.7rem;">OR</div>
+                                        </div>
+                                        <div>
+                                            <p class="text-sm font-medium text-foreground">Ocean Derek L. Regondola</p>
+                                            <p class="text-xs text-muted-foreground">ocean.regondola@cspc.edu.ph</p>
+                                        </div>
+                                    </div>
+                                    <span
+                                        class="ui-badge ui-badge-outline bg-chart-1/10 text-chart-1 border-chart-1/20">Student</span>
+                                </div>
+                                <div
+                                    class="flex items-center justify-between rounded-lg p-3 transition-colors hover:bg-muted/50">
+                                    <div class="flex items-center gap-3">
+                                        <div class="ui-avatar h-10 w-10">
+                                            <div class="ui-avatar-fallback text-xs font-medium"
+                                                style="font-size:0.7rem;">AL</div>
+                                        </div>
+                                        <div>
+                                            <p class="text-sm font-medium text-foreground">Aaron V. Lasprillas</p>
+                                            <p class="text-xs text-muted-foreground">aaron.lasprillas@cspc.edu.ph</p>
+                                        </div>
+                                    </div>
+                                    <span
+                                        class="ui-badge ui-badge-outline bg-chart-2/10 text-chart-2 border-chart-2/20">Instructor</span>
+                                </div>
+                                <div
+                                    class="flex items-center justify-between rounded-lg p-3 transition-colors hover:bg-muted/50">
+                                    <div class="flex items-center gap-3">
+                                        <div class="ui-avatar h-10 w-10">
+                                            <div class="ui-avatar-fallback text-xs font-medium"
+                                                style="font-size:0.7rem;">JP</div>
+                                        </div>
+                                        <div>
+                                            <p class="text-sm font-medium text-foreground">John Lawrence A. Paga</p>
+                                            <p class="text-xs text-muted-foreground">john.paga@cspc.edu.ph</p>
+                                        </div>
+                                    </div>
+                                    <span
+                                        class="ui-badge ui-badge-outline bg-chart-4/10 text-chart-4 border-chart-4/20">Admin</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Recent News -->
+                        <div class="ui-card border-border">
+                            <div class="p-6 pb-3" style="border-bottom:none;">
+                                <h3 class="text-lg font-semibold tracking-tight text-foreground">Recent News</h3>
+                            </div>
+                            <div class="p-6 pt-0" style="display:flex; flex-direction:column; gap:1rem;">
+                                <div class="rounded-lg border border-border p-4 transition-colors hover:bg-muted/50">
+                                    <div class="flex items-start justify-between gap-3">
+                                        <div class="flex-1">
+                                            <h4 class="text-sm font-medium text-foreground line-clamp-1">Enrollment
+                                                Period for 2nd Semester Now Open</h4>
+                                            <div class="mt-2 flex items-center gap-3">
+                                                <span
+                                                    class="ui-badge ui-badge-outline bg-chart-1/10 text-chart-1 border-chart-1/20">Announcement</span>
+                                                <div class="flex items-center gap-1 text-xs text-muted-foreground">
+                                                    <i data-lucide="clock" class="h-3 w-3"></i> 2 hours ago
+                                                </div>
+                                                <div class="flex items-center gap-1 text-xs text-muted-foreground">
+                                                    <i data-lucide="eye" class="h-3 w-3"></i> 1,245
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <span class="ui-badge ui-badge-default">Published</span>
+                                    </div>
+                                </div>
+                                <div class="rounded-lg border border-border p-4 transition-colors hover:bg-muted/50">
+                                    <div class="flex items-start justify-between gap-3">
+                                        <div class="flex-1">
+                                            <h4 class="text-sm font-medium text-foreground line-clamp-1">New Building
+                                                Wing B Construction Update</h4>
+                                            <div class="mt-2 flex items-center gap-3">
+                                                <span
+                                                    class="ui-badge ui-badge-outline bg-chart-2/10 text-chart-2 border-chart-2/20">Campus
+                                                    Update</span>
+                                                <div class="flex items-center gap-1 text-xs text-muted-foreground">
+                                                    <i data-lucide="clock" class="h-3 w-3"></i> 5 hours ago
+                                                </div>
+                                                <div class="flex items-center gap-1 text-xs text-muted-foreground">
+                                                    <i data-lucide="eye" class="h-3 w-3"></i> 892
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <span class="ui-badge ui-badge-default">Published</span>
+                                    </div>
+                                </div>
+                                <div class="rounded-lg border border-border p-4 transition-colors hover:bg-muted/50">
+                                    <div class="flex items-start justify-between gap-3">
+                                        <div class="flex-1">
+                                            <h4 class="text-sm font-medium text-foreground line-clamp-1">Upcoming
+                                                Foundation Day Celebration</h4>
+                                            <div class="mt-2 flex items-center gap-3">
+                                                <span
+                                                    class="ui-badge ui-badge-outline bg-chart-4/10 text-chart-4 border-chart-4/20">Events</span>
+                                                <div class="flex items-center gap-1 text-xs text-muted-foreground">
+                                                    <i data-lucide="clock" class="h-3 w-3"></i> 1 day ago
+                                                </div>
+                                                <div class="flex items-center gap-1 text-xs text-muted-foreground">
+                                                    <i data-lucide="eye" class="h-3 w-3"></i> 2,341
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <span class="ui-badge ui-badge-default">Published</span>
+                                    </div>
+                                </div>
+                                <div class="rounded-lg border border-border p-4 transition-colors hover:bg-muted/50">
+                                    <div class="flex items-start justify-between gap-3">
+                                        <div class="flex-1">
+                                            <h4 class="text-sm font-medium text-foreground line-clamp-1">Library Hours
+                                                Extended During Finals Week</h4>
+                                            <div class="mt-2 flex items-center gap-3">
+                                                <span
+                                                    class="ui-badge ui-badge-outline bg-chart-1/10 text-chart-1 border-chart-1/20">Announcement</span>
+                                                <div class="flex items-center gap-1 text-xs text-muted-foreground">
+                                                    <i data-lucide="clock" class="h-3 w-3"></i> 2 days ago
+                                                </div>
+                                                <div class="flex items-center gap-1 text-xs text-muted-foreground">
+                                                    <i data-lucide="eye" class="h-3 w-3"></i> 567
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <span class="ui-badge ui-badge-secondary border-transparent">Draft</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- System Logs -->
+                    <div class="ui-card border-border">
+                        <div class="p-6 pb-3" style="border-bottom:none;">
+                            <h3 class="text-lg font-semibold tracking-tight text-foreground">System Logs</h3>
+                        </div>
+                        <div class="p-6 pt-0" style="display:flex; flex-direction:column; gap:0.75rem;">
+                            <div
+                                class="flex items-start gap-3 rounded-lg border border-border p-3 transition-colors hover:bg-muted/50">
+                                <i data-lucide="check-circle" class="h-5 w-5 shrink-0 text-chart-1"></i>
+                                <div class="flex-1 min-w-0">
+                                    <p class="text-sm text-foreground">User authentication successful</p>
+                                    <div class="mt-1 flex items-center gap-2">
+                                        <span class="text-xs text-muted-foreground">2 min ago</span>
+                                        <span class="text-xs text-muted-foreground">•</span>
+                                        <span class="text-xs text-muted-foreground truncate">admin@cspc.edu.ph</span>
+                                    </div>
+                                </div>
+                                <span
+                                    class="ui-badge ui-badge-outline bg-chart-1/10 text-chart-1 border-chart-1/20">success</span>
+                            </div>
+                            <div
+                                class="flex items-start gap-3 rounded-lg border border-border p-3 transition-colors hover:bg-muted/50">
+                                <i data-lucide="info" class="h-5 w-5 shrink-0 text-chart-2"></i>
+                                <div class="flex-1 min-w-0">
+                                    <p class="text-sm text-foreground">New student registration completed</p>
+                                    <div class="mt-1 flex items-center gap-2">
+                                        <span class="text-xs text-muted-foreground">15 min ago</span>
+                                        <span class="text-xs text-muted-foreground">•</span>
+                                        <span class="text-xs text-muted-foreground truncate">system</span>
+                                    </div>
+                                </div>
+                                <span
+                                    class="ui-badge ui-badge-outline bg-chart-2/10 text-chart-2 border-chart-2/20">info</span>
+                            </div>
+                            <div
+                                class="flex items-start gap-3 rounded-lg border border-border p-3 transition-colors hover:bg-muted/50">
+                                <i data-lucide="alert-triangle" class="h-5 w-5 shrink-0 text-chart-4"></i>
+                                <div class="flex-1 min-w-0">
+                                    <p class="text-sm text-foreground">Failed login attempt detected</p>
+                                    <div class="mt-1 flex items-center gap-2">
+                                        <span class="text-xs text-muted-foreground">1 hour ago</span>
+                                        <span class="text-xs text-muted-foreground">•</span>
+                                        <span class="text-xs text-muted-foreground truncate">unknown</span>
+                                    </div>
+                                </div>
+                                <span
+                                    class="ui-badge ui-badge-outline bg-chart-4/10 text-chart-4 border-chart-4/20">warning</span>
+                            </div>
+                            <div
+                                class="flex items-start gap-3 rounded-lg border border-border p-3 transition-colors hover:bg-muted/50">
+                                <i data-lucide="check-circle" class="h-5 w-5 shrink-0 text-chart-1"></i>
+                                <div class="flex-1 min-w-0">
+                                    <p class="text-sm text-foreground">Database backup completed successfully</p>
+                                    <div class="mt-1 flex items-center gap-2">
+                                        <span class="text-xs text-muted-foreground">3 hours ago</span>
+                                        <span class="text-xs text-muted-foreground">•</span>
+                                        <span class="text-xs text-muted-foreground truncate">system</span>
+                                    </div>
+                                </div>
+                                <span
+                                    class="ui-badge ui-badge-outline bg-chart-1/10 text-chart-1 border-chart-1/20">success</span>
+                            </div>
+                            <div
+                                class="flex items-start gap-3 rounded-lg border border-border p-3 transition-colors hover:bg-muted/50">
+                                <i data-lucide="alert-circle" class="h-5 w-5 shrink-0 text-destructive"></i>
+                                <div class="flex-1 min-w-0">
+                                    <p class="text-sm text-foreground">API rate limit exceeded</p>
+                                    <div class="mt-1 flex items-center gap-2">
+                                        <span class="text-xs text-muted-foreground">5 hours ago</span>
+                                        <span class="text-xs text-muted-foreground">•</span>
+                                        <span class="text-xs text-muted-foreground truncate">external-service</span>
+                                    </div>
+                                </div>
+                                <span
+                                    class="ui-badge ui-badge-outline bg-destructive/10 text-destructive border-destructive/20">error</span>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <!-- Dark Mode Toggle -->
+    <button id="admin-theme-toggle" class="admin-theme-toggle" aria-label="Toggle dark mode">
+        <span class="icon-sun">☀️</span>
+        <span class="icon-moon">🌙</span>
+    </button>
+
+    <script>
+        lucide.createIcons();
+
+        // ── Activity Chart (Canvas area chart) ──
+        (function () {
+            const canvas = document.getElementById('activityChart');
+            if (!canvas) return;
+            const dpr = window.devicePixelRatio || 1;
+            const rect = canvas.getBoundingClientRect();
+            canvas.width = rect.width * dpr;
+            canvas.height = 300 * dpr;
+            canvas.style.height = '300px';
+            const ctx = canvas.getContext('2d');
+            ctx.scale(dpr, dpr);
+            const W = rect.width, H = 300;
+            const pad = { top: 20, right: 20, bottom: 30, left: 50 };
+            const data = [
+                { date: 'Jan', users: 400, mapViews: 2400 },
+                { date: 'Feb', users: 300, mapViews: 1398 },
+                { date: 'Mar', users: 520, mapViews: 3800 },
+                { date: 'Apr', users: 478, mapViews: 3908 },
+                { date: 'May', users: 589, mapViews: 4800 },
+                { date: 'Jun', users: 639, mapViews: 3800 },
+                { date: 'Jul', users: 780, mapViews: 4300 },
+                { date: 'Aug', users: 890, mapViews: 5100 },
+                { date: 'Sep', users: 720, mapViews: 4200 },
+                { date: 'Oct', users: 850, mapViews: 5500 },
+                { date: 'Nov', users: 920, mapViews: 6100 },
+                { date: 'Dec', users: 1100, mapViews: 7200 }
+            ];
+            const maxVal = 7200;
+            const cW = W - pad.left - pad.right;
+            const cH = H - pad.top - pad.bottom;
+            const xStep = cW / (data.length - 1);
+
+            function yPos(v) { return pad.top + cH - (v / maxVal) * cH; }
+            function xPos(i) { return pad.left + i * xStep; }
+
+            // Grid lines
+            const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+            ctx.strokeStyle = isDark ? 'rgba(255,255,255,0.06)' : 'rgba(0,0,0,0.06)';
+            ctx.lineWidth = 1;
+            for (let i = 0; i <= 5; i++) {
+                const y = pad.top + (cH / 5) * i;
+                ctx.beginPath(); ctx.moveTo(pad.left, y); ctx.lineTo(W - pad.right, y); ctx.stroke();
+            }
+
+            // Y-axis labels
+            ctx.fillStyle = isDark ? '#9ca3af' : '#6b7280';
+            ctx.font = '12px Inter, system-ui, sans-serif';
+            ctx.textAlign = 'right';
+            for (let i = 0; i <= 5; i++) {
+                const val = Math.round((maxVal / 5) * (5 - i));
+                const y = pad.top + (cH / 5) * i;
+                ctx.fillText(val.toLocaleString(), pad.left - 8, y + 4);
+            }
+
+            // X-axis labels
+            ctx.textAlign = 'center';
+            data.forEach((d, i) => {
+                ctx.fillText(d.date, xPos(i), H - 8);
+            });
+
+            // Draw filled area + line helper
+            function drawArea(key, strokeColor, fillColorTop, fillColorBot) {
+                const grad = ctx.createLinearGradient(0, pad.top, 0, H - pad.bottom);
+                grad.addColorStop(0, fillColorTop);
+                grad.addColorStop(1, fillColorBot);
+                ctx.beginPath();
+                ctx.moveTo(xPos(0), yPos(data[0][key]));
+                for (let i = 1; i < data.length; i++) {
+                    const cx1 = xPos(i - 1) + xStep * 0.4;
+                    const cx2 = xPos(i) - xStep * 0.4;
+                    ctx.bezierCurveTo(cx1, yPos(data[i - 1][key]), cx2, yPos(data[i][key]), xPos(i), yPos(data[i][key]));
+                }
+                ctx.lineTo(xPos(data.length - 1), H - pad.bottom);
+                ctx.lineTo(xPos(0), H - pad.bottom);
+                ctx.closePath();
+                ctx.fillStyle = grad;
+                ctx.fill();
+                ctx.beginPath();
+                ctx.moveTo(xPos(0), yPos(data[0][key]));
+                for (let i = 1; i < data.length; i++) {
+                    const cx1 = xPos(i - 1) + xStep * 0.4;
+                    const cx2 = xPos(i) - xStep * 0.4;
+                    ctx.bezierCurveTo(cx1, yPos(data[i - 1][key]), cx2, yPos(data[i][key]), xPos(i), yPos(data[i][key]));
+                }
+                ctx.strokeStyle = strokeColor;
+                ctx.lineWidth = 2;
+                ctx.stroke();
+            }
+
+            drawArea('mapViews', '#d4a843', 'rgba(212,168,67,0.3)', 'rgba(212,168,67,0)');
+            drawArea('users', '#1a3a6b', 'rgba(26,58,107,0.3)', 'rgba(26,58,107,0)');
+        })();
+
+        // ── Role Distribution (SVG donut chart) ──
+        (function () {
+            const svg = document.getElementById('roleChart');
+            if (!svg) return;
+            const roles = [
+                { value: 1845, color: '#1a3a6b' },
+                { value: 389, color: '#2563a8' },
+                { value: 156, color: '#d4a843' },
+                { value: 24, color: '#7c3aed' },
+                { value: 433, color: '#6b7280' }
+            ];
+            const total = roles.reduce((s, r) => s + r.value, 0);
+            const cx = 100, cy = 100, outerR = 80, innerR = 50, gap = 2;
+            let startAngle = -Math.PI / 2;
+            roles.forEach(r => {
+                const sliceAngle = (r.value / total) * Math.PI * 2;
+                const gapAngle = gap / outerR;
+                const a1 = startAngle + gapAngle / 2;
+                const a2 = startAngle + sliceAngle - gapAngle / 2;
+                const x1o = cx + outerR * Math.cos(a1);
+                const y1o = cy + outerR * Math.sin(a1);
+                const x2o = cx + outerR * Math.cos(a2);
+                const y2o = cy + outerR * Math.sin(a2);
+                const x2i = cx + innerR * Math.cos(a2);
+                const y2i = cy + innerR * Math.sin(a2);
+                const x1i = cx + innerR * Math.cos(a1);
+                const y1i = cy + innerR * Math.sin(a1);
+                const large = sliceAngle > Math.PI ? 1 : 0;
+                const d = `M ${x1o} ${y1o} A ${outerR} ${outerR} 0 ${large} 1 ${x2o} ${y2o} L ${x2i} ${y2i} A ${innerR} ${innerR} 0 ${large} 0 ${x1i} ${y1i} Z`;
+                const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+                path.setAttribute('d', d);
+                path.setAttribute('fill', r.color);
+                svg.appendChild(path);
+                startAngle += sliceAngle;
+            });
+        })();
+    </script>
+</body>
+
+</html>
